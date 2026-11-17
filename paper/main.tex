@@ -18,8 +18,10 @@
 %
 % NOTE ON FIGURES: the source had two embedded charts (Figure 1, a
 % qualitative scatterplot; Figure 2, an 8-step cycle diagram) that did not
-% survive the hand-off to Markdown. They are left as labelled placeholders
-% below -- see paper/README.md.
+% survive the hand-off to Markdown, and the originals were not recoverable.
+% Both are reconstructed below as native TikZ figures from the qualitative
+% positioning and step-by-step description given in the article's own
+% prose -- see paper/README.md.
 % ==========================================================================
 \documentclass[11pt]{article}
 
@@ -34,6 +36,8 @@
 \usepackage{xcolor}
 \usepackage[expansion=false]{microtype}
 \usepackage{xurl}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
 \usepackage[hidelinks,breaklinks]{hyperref}
 
 \hypersetup{
@@ -575,9 +579,39 @@ Three findings follow.
 
 \textbf{Finding 3 (RQ1, RQ2): verification is split in two.} Prose-based techniques check that a text is clear, complete, and coherent. Tornhill's workflow checks that behaviour is the desired one, but keeps neither rationale nor structure. No reviewed technique does both, and none maintains an explicit architecture model across features together with a development cycle.
 
-\begin{quote}
-\emph{[Figure 1 -- qualitative position of the 11 techniques and the proposed model on two axes (scope of knowledge organised; strength of verification); author's assessment. Not reproduced in this text transcription -- see paper/README.md.]}
-\end{quote}
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.62]
+  % axes
+  \draw[-{Latex}] (0,0) -- (11,0) node[below right, font=\footnotesize] {feature $\;\to\;$ system / organisation};
+  \draw[-{Latex}] (0,0) -- (0,11) node[above left, font=\footnotesize, rotate=90, anchor=south] {weak $\;\to\;$ strong};
+  \node[below=10pt, font=\footnotesize\bfseries] at (5.5,-1.3) {Scope of knowledge organised};
+  \node[rotate=90, font=\footnotesize\bfseries] at (-1.6,5.5) {Strength of verification};
+
+  % empty upper-right region the proposed model targets
+  \draw[dashed, gray] (6.3,6.3) rectangle (10.8,10.8);
+  \node[align=center, font=\scriptsize\itshape, text=gray] at (8.55,8.9) {empty region\\(Finding 3)};
+
+  % reviewed techniques (qualitative positions; author's assessment)
+  \fill (1.5,9.3) circle (2.2pt); \node[right, font=\scriptsize] at (1.7,9.3) {Tornhill};
+  \fill (6.3,7.2) circle (2.2pt); \node[above, font=\scriptsize] at (6.3,7.4) {EGM};
+  \fill (9.0,3.6) circle (2.2pt); \node[below, font=\scriptsize] at (9.0,3.4) {C4 / arc42 / ADRs};
+  \fill (7.2,3.0) circle (2.2pt); \node[below, font=\scriptsize] at (7.2,2.8) {OpenSpec};
+  \fill (6.0,2.1) circle (2.2pt); \node[below, font=\scriptsize] at (6.0,1.9) {BMAD};
+  \fill (8.3,1.6) circle (2.2pt); \node[below, font=\scriptsize] at (8.3,1.4) {LLM Wiki / OKF};
+  \fill (3.6,2.6) circle (2.2pt); \node[below, font=\scriptsize] at (3.6,2.4) {AI-DLC};
+  \fill (1.8,5.6) circle (2.2pt); \node[left, font=\scriptsize] at (1.6,5.6) {Pocock skills};
+  \fill (3.1,4.6) circle (2.2pt); \node[right, font=\scriptsize] at (3.3,4.6) {Kiro};
+  \fill (2.2,4.0) circle (2.2pt); \node[left, font=\scriptsize] at (2.0,4.0) {Spec Kit};
+  \fill (2.6,3.3) circle (2.2pt); \node[right, font=\scriptsize] at (2.8,3.3) {Tessl};
+
+  % proposed model
+  \node[star,star points=5,star point ratio=2.2,fill=black,inner sep=1.6pt] at (9.2,9.2) {};
+  \node[above, font=\scriptsize\bfseries] at (9.2,9.5) {Proposed model};
+\end{tikzpicture}
+\caption{Qualitative position of the 11 reviewed techniques and the proposed model on two axes: the scope of knowledge a technique organises, and the strength with which it verifies what was written. Positions are the author's qualitative assessment (Section 10), not a measurement. The upper-right region is empty: techniques that verify well (Tornhill) operate at feature scope, and techniques that organise system-level knowledge (C4, OpenSpec, LLM Wiki/OKF) verify weakly. The model proposed in Section 7 targets the empty region.}
+\label{fig:positioning}
+\end{figure}
 
 The upper-right region is empty. Techniques that verify well operate at feature scope; those that organise system-level or organisation-level knowledge barely verify. The model proposed in Section 7 targets that region.
 
@@ -684,9 +718,49 @@ From EGM the model takes its second rule: authors do not verify their own artifa
 
 Each increment is a thin, complete slice of behaviour, small enough to be understood at once and delivered in hours or a few days. The cycle alternates between humans and agents, and humans appear at four bounds.
 
-\begin{quote}
-\emph{[Figure 2 -- one increment under bounded delegation: 8 steps, 4 human and 4 agent. Not reproduced in this text transcription -- see paper/README.md.]}
-\end{quote}
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  scale=1,
+  stepnode/.style={circle, minimum size=1.05cm, inner sep=0pt, font=\scriptsize\bfseries, draw, thick},
+  human/.style={stepnode, fill=black!82, text=white},
+  agent/.style={stepnode, fill=white, text=black},
+  lbl/.style={font=\scriptsize, align=center}
+]
+  % 8 nodes evenly spaced on a circle, step 1 at top, clockwise
+  \def\R{3.6}
+  \node[human] (s1) at (90:\R)  {1};
+  \node[agent] (s2) at (45:\R)  {2};
+  \node[human] (s3) at (0:\R)   {3};
+  \node[agent] (s4) at (-45:\R) {4};
+  \node[human] (s5) at (-90:\R) {5};
+  \node[agent] (s6) at (-135:\R){6};
+  \node[agent] (s7) at (180:\R) {7};
+  \node[human] (s8) at (135:\R) {8};
+
+  % cycle arrows
+  \draw[-{Latex}, thick] (s1) -- (s2);
+  \draw[-{Latex}, thick] (s2) -- (s3);
+  \draw[-{Latex}, thick] (s3) -- (s4);
+  \draw[-{Latex}, thick] (s4) -- (s5);
+  \draw[-{Latex}, thick] (s5) -- (s6);
+  \draw[-{Latex}, thick] (s6) -- (s7);
+  \draw[-{Latex}, thick] (s7) -- (s8);
+  \draw[-{Latex}, thick, dashed] (s8) to[bend left=18] node[midway, above, font=\scriptsize\itshape] {feedback ring (7.7)} (s1);
+
+  % labels outside each node
+  \node[lbl, above=2pt of s1] {Intent\\\footnotesize(human)};
+  \node[lbl, right=2pt of s2] {Interview\\\footnotesize(elephant)};
+  \node[lbl, right=2pt of s3] {Executable\\scenarios\\\footnotesize(human-driven)};
+  \node[lbl, right=2pt of s4] {Isolated\\review\\\footnotesize(goldfish)};
+  \node[lbl, below=2pt of s5] {Gate\\\footnotesize(human)};
+  \node[lbl, left=2pt of s6] {Implementation\\\footnotesize(agent)};
+  \node[lbl, left=2pt of s7] {Verification\\\footnotesize(pipeline)};
+  \node[lbl, left=2pt of s8] {Learning\\\footnotesize(human)};
+\end{tikzpicture}
+\caption{One increment under Bounded Delegation: 8 steps, alternating human bounds (filled nodes: Intent, Executable scenarios, Gate, Learning) and agent-performed steps (outlined nodes: Interview, Isolated review, Implementation, Verification). The dashed arrow closes the feedback ring described in Section 7.7, which routes drift signals from evidence back up to intent.}
+\label{fig:cycle}
+\end{figure}
 
 \begin{enumerate}[leftmargin=*]
   \item \textbf{Intent.} A person states the problem, the motivation, and known constraints.
