@@ -18,32 +18,32 @@ evaluation agenda, and a contrast with the software engineering canon (Brooks, S
 Parnas, Naur, the Agile Manifesto).
 
 - 🌐 **Landing page:** <https://mtheus.github.io/bounded-delegation/>
-- 📝 **Blog summary:** [`article.md`](./article.md) (source) · [rendered page](https://mtheus.github.io/bounded-delegation/article.html)
-- 📄 **Full paper:** [PDF](./paper/main.pdf) · [LaTeX source](./paper/main.tex) — this is the complete article (the one meant for arXiv and, later, JSERD)
-- 📄 **arXiv preprint:** not yet submitted — see [`paper/README.md`](./paper/README.md). <!-- TODO(arxiv): replace with https://arxiv.org/abs/XXXX.XXXXX once published -->
-- 🎓 **Future target venue:** [JSERD — Journal of Software Engineering Research and Development](https://journals-sol.sbc.org.br/index.php/jserd/) (SBC)
+- 📖 **Full paper (read online):** <https://mtheus.github.io/bounded-delegation/article.html>
+- 📄 **LaTeX source / PDF:** [`paper/main.tex`](./paper/main.tex) · [`paper/main.pdf`](./paper/main.pdf)
+- 🗄️ **HAL:** <!-- TODO(hal): add the HAL deposit URL here --> *(link coming soon)*
+- 📝 **Short summary:** [`article.md`](./article.md)
 - 💼 **Author:** [linkedin.com/in/matheusbn](https://www.linkedin.com/in/matheusbn/)
 
 ## Repository layout
 
 ```
 .
-├── article.md          short blog-style SUMMARY of the paper, for the website/socials
-├── article.html         rendered, styled version of that summary, for GitHub Pages
+├── article.md          short blog-style summary, for the website/socials
+├── article.html         the FULL paper, converted to HTML for free online reading
 ├── index.html            landing page (abstract, findings, links) for GitHub Pages
 ├── .nojekyll             disables Jekyll processing — this is a hand-written static site
 ├── paper/
-│   ├── main.tex           the FULL article — the one submitted to arXiv/JSERD
-│   ├── main.pdf           compiled PDF (pdflatex, builds cleanly, 35 pages)
-│   └── README.md          build and arXiv/JSERD submission instructions
+│   ├── main.tex           the FULL article in LaTeX — the canonical source
+│   ├── main.pdf           compiled PDF (pdflatex, builds cleanly, 36 pages)
+│   └── README.md          build instructions
 └── LICENSE                CC0 1.0 (public domain)
 ```
 
-**`paper/main.tex` is the canonical, complete article** — the thing that gets submitted to
-arXiv and, later, adapted for JSERD. `article.md`/`article.html` are a *short, separate*
-blog-post summary used to drive traffic to the full paper; they are not meant to contain the
-full text. If you revise the argument, edit `paper/main.tex` first, then update the summary in
-`article.md`/`article.html` only if the headline claims changed, and recompile `paper/main.pdf`.
+**`paper/main.tex` is the canonical, complete article.** `article.html` is a full HTML
+conversion of it (via pandoc, hand-finished) meant to be read freely in a browser, with no
+paywall or submission gate; `article.md` stays a short summary for social sharing. If you
+revise the argument, edit `paper/main.tex` first, then regenerate `article.html` and
+`paper/main.pdf`, and update `article.md`'s summary only if the headline claims changed.
 
 ## License
 

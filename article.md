@@ -5,7 +5,7 @@
 **Matheus Bastos Neves** · Independent Researcher
 [linkedin.com/in/matheusbn](https://www.linkedin.com/in/matheusbn/) · November 2026
 
-*This is a short summary. Read the complete review, the full comparison tables, and the formal model in the [full paper](./paper/main.pdf) ([LaTeX source](./paper/main.tex)) — arXiv preprint coming soon.*
+*This is a short summary. Read the complete review, the full comparison tables, and the formal model in the [full paper](./article.html) (also available as [PDF](./paper/main.pdf) / [LaTeX source](./paper/main.tex)) — free to read, no paywall or submission gate.*
 
 ---
 
@@ -33,7 +33,7 @@ Measured against the software engineering canon — Brooks, Sommerville, Parnas,
 
 None of this has been validated empirically. The full paper states six falsifiable sub-hypotheses (H1–H6), an evaluation agenda with concrete experimental designs for each, and a full threats-to-validity discussion — because a single-author, narrative review building a model to fit its own findings is exactly the kind of result that needs independent testing before anyone should trust it.
 
-**Read the full paper** → [PDF](./paper/main.pdf) · [LaTeX source](./paper/main.tex) (arXiv preprint coming soon)
+**Read the full paper** → [HTML](./article.html) · [PDF](./paper/main.pdf) · [LaTeX source](./paper/main.tex)
 **Discuss** → [linkedin.com/in/matheusbn](https://www.linkedin.com/in/matheusbn/)
 
 ---
