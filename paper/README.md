@@ -46,7 +46,7 @@ pdflatex -interaction=nonstopmode main.tex   # second pass for cross-references
 ```
 
 This was run during the authoring of this file: it compiles cleanly (no errors, no undefined
-references) to a 36-page PDF, with only a handful of cosmetically negligible overfull/underfull
+references) to a 41-page PDF, with only a handful of cosmetically negligible overfull/underfull
 boxes from the narrow table columns.
 
 ## Regenerating article.html

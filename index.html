@@ -193,6 +193,7 @@
       <li><strong>Evidence</strong> (Evidence Bound &mdash; Human Owned): inspectable executable scenarios, architecture assertions, and automated evaluation suites.</li>
     </ol>
     <p>Humans own the bounds (Layers 1&ndash;3 and Layer 7). Agents read, write, and maintain the implementation path between them (Layers 4&ndash;6). Humans stop spending hours reading raw implementation diffs line-by-line; instead, they verify that the evidence satisfies the intent.</p>
+    <p>The idea has a precedent. Agile teams have long paired a short user story with acceptance tests: Ron Jeffries&rsquo;s &ldquo;card, conversation, confirmation&rdquo;. A 2026 review of the empirical research on user stories (Sporsem, Dingsøyr &amp; Stol, <em>Journal of Systems and Software</em>) shows why that practice strains under agents: the understanding a story creates lives in the heads of the people who discussed it, and the written story decays once the work ships. An agent is a permanent newcomer who was in none of those conversations. Bounded Delegation keeps the card and the confirmation, makes both readable by an agent, and locks the confirmation so the agent cannot edit it.</p>
 
     <h3>Comparing Test Specs: Raw Agent Output vs. Domain-Inspectable Evidence</h3>
     <p>Inspired by Adam Tornhill&rsquo;s AI-first workflow, executable evidence must be written in high-level domain language so human experts can verify system behavior at a glance without reading lower-level implementation details.</p>
@@ -243,6 +244,7 @@ AGENT-ERA FLOW: Attention-Constrained Queueing
       </tbody>
     </table>
     <p>Core Agile values &mdash; such as customer collaboration and delivering working software &mdash; remain fully intact. However, operational tools like story points, velocity metrics, and time-boxed sprints lose their purpose when machine implementation takes minutes, shifting the central challenge entirely to managing human review queues.</p>
+    <p>One caveat: sprints did more than ration programmer hours. Fixed iterations gave people a stable window in which priorities did not change. Whatever replaces the sprint has to keep that window for the humans who decide and review, for example by capping how many pending decisions each person holds.</p>
 
     <h2>6. Takeaway 5: Code Health Matters More for Machines Than It Ever Did for Humans</h2>
     <p>A common misconception in the age of generative AI is that &ldquo;clean code&rdquo; no longer matters because humans rarely read implementation details. Empirical research demonstrates the exact opposite.</p>

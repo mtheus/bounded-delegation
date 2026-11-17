@@ -72,14 +72,14 @@
 
 \textbf{Objective.} We ask how current techniques structure and verify the knowledge agents need, which kinds of debt they leave unaddressed, and what division of reading and decision between humans and agents best preserves software health in iterative, incremental development.
 
-\textbf{Method.} We conduct a multivocal review of eleven approaches (snapshot: November 2026) and compare them on nine criteria, including directory structure, verification, drift control, and the three debts of Storey's model.
+\textbf{Method.} We conduct a multivocal review of eleven approaches (snapshot: November 2026) and compare them on nine criteria, including directory structure, verification, drift control, and the three debts of Storey's model. We interpret the results through boundary object theory (Star and Griesemer, 1989; Carlile, 2002), building on a recent theoretical review of user stories (Sporsem et al., 2026).
 
 \textbf{Results.} No reviewed technique maintains an explicit architecture model across features; cognitive debt is a blind spot of the market; and verification splits into two disconnected worlds, one checking that prose is clear and one checking that behaviour is correct.
 
 \textbf{Proposal.} We formulate the \textbf{Bounded Delegation hypothesis}: delegating implementation to agents is sustainable when, and only when, it is bounded on one side by human-owned intent and on the other by human-readable executable evidence, with both bounds kept current by feedback. We derive a model with seven knowledge layers, three roles, and a feedback ring; six testable sub-hypotheses; an evaluation agenda; a contrast with the software engineering canon (Pressman, Sommerville, the SWEBOK, Brooks, and the authors of the Agile Manifesto) that separates the fundamentals preserved from those that change; and the process practices that lose their rationale, from GitFlow to release trains.
 \end{abstract}
 
-\noindent\textbf{Keywords:} coding agents; spec-driven development; software architecture; context engineering; cognitive debt; intent debt; human--AI collaboration; software process.
+\noindent\textbf{Keywords:} coding agents; spec-driven development; software architecture; context engineering; cognitive debt; intent debt; human--AI collaboration; software process; boundary objects; agile requirements engineering.
 
 % ==========================================================================
 \section{Introduction}
@@ -119,6 +119,7 @@ The review leads to one organising claim, which also names the model.
   \item An analysis of knowledge directory structures, identifying seven organising axes.
   \item The Bounded Delegation model: seven knowledge layers, three roles, a feedback ring, and an explicit statement of what humans read and what agents read.
   \item A contrast with the software engineering canon that identifies the fundamentals preserved and changed, and the process practices whose rationale weakens.
+  \item A reading of the two bounds as boundary objects between people and agents, mapped to Carlile's syntactic, semantic, and pragmatic knowledge boundaries, with agile requirements engineering as their nearest precedent.
   \item An evaluation agenda that operationalises the hypotheses.
 \end{enumerate}
 
@@ -298,12 +299,26 @@ The talks converge on four points, each consistent with the controlled evidence 
 
 They also disagree in two places that matter here. The first is the medium of the specification: Grove argues for durable prose specifications, Farley and Tornhill for executable ones. The model in Section 7 takes both, prose for rationale and executable scenarios for behaviour, and H2 tests whether the executable part earns its cost. The second is how much process survives better models: Cherny's reversal on planning within six months is a warning that any prescribed step may be an artifact of current model limits. This is the main reason the model is stated as bounds that people own, not as steps that agents must follow.
 
+\subsection{Agile requirements engineering and boundary objects}
+
+The problem this paper treats as new has a twenty-year precedent. Agile requirements engineering faced it with user stories: short written statements of intent whose detail was deliberately left to conversation. Sporsem, Dings{\o}yr, and Stol (2026) synthesise 14 industry studies into five propositions: (P1) user stories build shared understanding between developers and users; (P2) small stories help developers cope with change; (P3) stating the ``why'' focuses work on user needs but adds cost; (P4) the conversations stories trigger can hamper the sense of productivity; and (P5) stories as recorded in writing degrade over time.
+
+Three of these bear directly on coding agents. First, the understanding a story produces lives in the memory of the people who held the conversation, and a reminder of a conversation one did not attend holds little value (P1, drawing on Conboy, 2021). An agent is a permanent newcomer: it starts every session outside every conversation. Second, Jeffries's (2001) triad of card, conversation, and confirmation already paired a short statement of intent with acceptance tests. The two bounds of Section 7 are, in this sense, the card and the confirmation, with the conversation moved to the interview step. The novelty claimed here is therefore narrower than it may appear: not the pairing itself, but making both ends readable by an agent, locking the confirmation, and verifying each end independently of its author. Third, written stories degrade because the team's mental model moves on and nobody updates the text (P5), the same mechanism this paper calls intent debt.
+
+The review also recalls an older split in requirements engineering. Abstractionists specify systems through formal models; contextualists hold that context can never be fully written down (Potts and Hsi, 1997). Agile methods sided with the contextualists. Spec-driven development swings back towards writing everything down, because an agent can read nothing else. The model proposed here does not settle the debate; it bounds it. What must be written is what the agent needs at the two bounds; the rest of the context stays a human practice (Section 7.7).
+
+The theoretical lens is boundary object theory. A boundary object keeps a common identity across social worlds while being specific enough to be used within each (Star and Griesemer, 1989). Carlile (2002) distinguishes three knowledge boundaries: syntactic (a shared vocabulary is missing), semantic (the same words are read differently), and pragmatic (groups have different interests at stake and must transform their knowledge). Levina and Vaast (2005) separate \emph{designated} boundary objects, meant to span a boundary but not used that way, from boundary objects \emph{in use}. Sporsem et al.\ close by asking whether user stories can carry requirements across a new boundary, from people to language models. This paper takes up that question for the whole knowledge base of an agent-assisted project (Section 7.9).
+
+Boundary object theory has already been applied to the artifacts this paper reviews. Pareto, Eriksson, and Ehnebom (2010) treated architectural descriptions as boundary objects between system and design engineers; Sedano, Ralph, and P\'eraire (2019) treated the product backlog as one; Wohlrab et al.\ (2019) studied engineering artifacts in large-scale agile systems engineering; and Matthies et al.\ (2023) found four categories of boundary objects in DevOps projects, among them requirements and deployed-system information. What agents change is one side of the boundary: a reader with no tacit knowledge, no memory between sessions, and no stake in the outcome. Beneath all of this lies Tiwana's (2004) view of software development as knowledge integration, which he linked empirically to development performance.
+
 % ==========================================================================
 \section{Method}
 
 \subsection{Review design}
 
 Most of the techniques of interest are documented in repositories, vendor documentation, practitioner essays, and blog posts rather than in peer-reviewed venues. We therefore follow the logic of a multivocal literature review, which admits grey literature alongside formal literature (Garousi, Felderer, and M\"antyl\"a, 2019). The review is narrative rather than systematic: we did not run a registered search protocol, and we report this as a limitation in Section 10.
+
+This choice has a cost that a stricter design avoids. Sporsem et al.\ (2026), reviewing a related topic, excluded grey literature because it receives no independent scrutiny, kept only studies with an adequate methods description, and retained a proposition only when at least three distinct sources supported it. That design is not available here, since most techniques reviewed have no peer-reviewed description at all. We mitigate the gap in three ways: each empirical table states the design and type of its sources (Section 2.2); claims that rest on a vendor or a single practitioner are labelled as such; and Section 7.1 states the evidential basis of each sub-hypothesis, so that conjectures are not read as findings.
 
 \subsection{Selection}
 
@@ -364,6 +379,8 @@ specs/
 \textbf{Strengths.} Low adoption cost and support for many agents. A clarification step forces the agent to ask before planning, and an analysis step checks consistency across specification, plan, and tasks. Templates give a team a common format from day one.
 
 \textbf{Weaknesses.} Each feature produces several long Markdown files, and reviewing them is more tiring than reviewing code, which invites rubber-stamping. Numbered folders accumulate with nothing to consolidate them: after thirty features there is no place to read current behaviour. The full flow is disproportionate for small fixes. B\"ockeler found it spec-first in practice and noted that agents do not always follow the constitution.
+
+Agile requirements engineering recorded the same reflex. When developers found a user story unclear, the product owner answered with ``a twenty-sentence specification'', which suppressed the conversation the story was meant to start (Ananjeva et al., 2020, as reviewed by Sporsem et al., 2026). Spec kits make that answer the default: each gap is closed with more text rather than with a conversation.
 
 \paragraph{Kiro.} Kiro, AWS's IDE, splits knowledge into two levels. \emph{Steering} holds what applies to the whole project (product, stack, folder structure, conventions), and each steering file can declare when it is loaded into context. \emph{Specs} hold each feature in three files: requirements in EARS notation (``WHEN \ldots{} THE SYSTEM SHALL \ldots{}''), a technical design, and tasks (\href{https://dev.to/joseph_arriola/abriste-kiro-y-ahora-que-463f}{DEV Community}).
 
@@ -577,6 +594,8 @@ Three findings follow.
 
 \textbf{Finding 2 (RQ2): cognitive debt is a blind spot.} Where it appears at all, it is a side effect of a human gate, not an objective. No technique measures it.
 
+The gap is not new. In agile requirements engineering, user stories were adopted precisely to build shared understanding through conversation, and the evidence shows that this understanding is lost when the people who held the conversations leave (Sporsem et al., 2026, P1). The agent techniques reviewed here inherit the written half of that practice and drop the conversational half.
+
 \textbf{Finding 3 (RQ1, RQ2): verification is split in two.} Prose-based techniques check that a text is clear, complete, and coherent. Tornhill's workflow checks that behaviour is the desired one, but keeps neither rationale nor structure. No reviewed technique does both, and none maintains an explicit architecture model across features together with a development cycle.
 
 \begin{figure}[htbp]
@@ -662,6 +681,8 @@ The physical folder tree is not the logical architecture: cross-cutting concerns
 
 \textbf{Finding 4 (RQ1): no single axis suffices.} The strongest structure combines four: current truth separated from changes (OpenSpec), contracts co-located with code (EGM), a logical model that cuts across folders (C4), and a linked base of concepts and decisions (OKF).
 
+The weakness of the by-feature axis has an empirical precedent. In large-scale agile programmes, teams working from some 2,000 user stories struggled to describe the complete system and fell back on epics and themes to regain an overview (Kasauli et al., 2021, as reviewed by Sporsem et al., 2026). Feature-scoped specification kits reproduce the same structure, at agent speed.
+
 % ==========================================================================
 \section{The Bounded Delegation model}
 
@@ -683,16 +704,18 @@ $H_0$ decomposes into six sub-hypotheses. Each states a comparison and a predict
 \midrule
 \endhead
 H1 & \textbf{Boundary reading.} Humans who read intent and inspectable scenarios, and read implementation only by exception, detect behavioural defects at least as well as humans who review implementation line by line. & Equal or lower escaped-defect rate, with lower human review time per change & Tornhill; DORA on verification cost \\
-H2 & \textbf{Executable bound.} Locked, inspectable scenarios written before implementation reduce behaviour drift relative to prose specifications. & Fewer divergences between stakeholder expectation and observed behaviour & Tornhill; Farley; Finding 3 \\
+H2 & \textbf{Executable bound.} Locked, inspectable scenarios written before implementation reduce behaviour drift relative to prose specifications. & Fewer divergences between stakeholder expectation and observed behaviour & Tornhill; Farley; Finding 3; Carlile (semantic boundary) \\
 H3 & \textbf{Context-free verification.} Artifacts that pass zero-context review require fewer agent clarifications and less rework than artifacts reviewed by context-rich reviewers. & Fewer clarification requests and fewer tokens per change & EGM; Storey on intent debt \\
 H4 & \textbf{Structured context.} Co-located contracts linked to an explicit architecture model reduce architecture violations and context cost compared with feature-scoped specifications alone. & Fewer violated architectural assertions; fewer files read per change & EGM; C4; Finding 4 \\
-H5 & \textbf{Feedback.} Per-layer feedback from evidence back to intent slows the growth of artifact staleness and model-code drift. & Lower drift and artifact age over 6 to 12 months & OpenSpec; Lehman; Finding 1 \\
+H5 & \textbf{Feedback.} Per-layer feedback from evidence back to intent slows the growth of artifact staleness and model-code drift. & Lower drift and artifact age over 6 to 12 months & OpenSpec; Lehman; Finding 1; Sporsem et al.\ (P5) \\
 H6 & \textbf{Attention as the constraint.} Limiting pending human decisions per person predicts delivery stability better than time-boxed, velocity-based planning. & Lower change failure rate at equal throughput & DORA; Finding 2 \\
 \bottomrule
 \end{longtable}
 \normalsize
 
 If H1 fails, humans must keep reading implementation and the model's economy collapses. If H3 fails, isolated review is cost without benefit. The hypotheses are deliberately separable.
+
+The evidential basis is uneven, and we state it plainly. By the threshold Sporsem et al.\ (2026) apply, at least three distinct empirical sources per proposition, none of the six qualifies yet. H1, H5, and H6 draw on at least one peer-reviewed or large-survey source (DORA; Lehman), while H2, H3, and H4 rest mainly on practitioner reports and on this review's own findings. All six are therefore conjectures to be tested, not propositions synthesised from evidence.
 
 \subsection{Seven knowledge layers}
 
@@ -710,9 +733,15 @@ The model organises knowledge in seven layers. Layers 1--3 form the \emph{intent
 
 Layer 7 is not written last. Executable scenarios are drafted right after the problem, before any step, and they, rather than a prose document, are the specification the agent must satisfy. The prose of layers 1--3 keeps what tests cannot say: the rationale.
 
+Rationale has a cost, and the model must place it where it is paid once. Stating the ``why'' focuses work on user needs, but the true reason often takes several rounds of asking, and developers omitted it when the same reason applied to many stories (Sporsem et al., 2026, P3; Diebold et al., 2018). The layering answers this: a reason that holds for many increments is written once, in layer 1 or 3, and each increment links to it instead of restating it. Technical requirements with no user to speak for them go to decisions, not to scenarios, much as Kniberg (2015) kept tech stories apart from user stories.
+
+Scenarios alone are not a specification. Meyer's (2018) criticism of user stories applies to them unchanged: piling up case over case does not give a specification, only a system that handles the planned cases and possibly nothing else. This is why layer 7 is bounded from above by layers 1--4: quality scenarios, decisions, and structure state the general properties that no list of cases implies. Non-functional requirements are the clearest gap. User stories handled them poorly (Behutiye et al., 2020), and end-to-end scenarios inherit that weakness unless the quality scenarios of layer 1 are turned into checks.
+
 \subsection{Three roles}
 
 From EGM the model takes its second rule: authors do not verify their own artifacts. \textbf{Elephants} receive maximal context and draft. \textbf{Goldfish} receive none: only the artifact, the files it links to, and the code. \textbf{Humans} decide the premises in layers 1--3 and, before approving, explain the change in their own words. The goldfish measures intent debt (is the artifact self-sufficient?); the human explanation measures cognitive debt (does the team understand it?). Neither test replaces the other.
+
+The human role has a name in boundary object theory. Levina and Vaast (2005) call \emph{boundary spanners} the people who adapt objects to each side, show others how to use them, and introduce them at the right time. In agile requirements engineering, a story's effect depended more on the skill of the person writing and telling it than on the story itself (Sporsem et al., 2026, P1; Conboy, 2021). Under bounded delegation, keeping the bounds legible to both people and agents is that spanning work: a skill to be valued when staffing a team, not a by-product of approving changes.
 
 \subsection{The iterative and incremental cycle}
 
@@ -772,6 +801,8 @@ Each increment is a thin, complete slice of behaviour, small enough to be unders
   \item \textbf{Verification.} The pipeline runs the locked scenarios, the architecture tests, automated reviews, and model-code comparison. Failures return to step 6 without human involvement.
   \item \textbf{Learning.} The person reads results (scenarios, production metrics, feedback signals) and adjusts the intent of the next increment.
 \end{enumerate}
+
+The evidence on user stories supports this size. Small stories were estimated more accurately, exposed dependencies earlier, and shortened the wait for user feedback; large ones grew unexpectedly and produced more code than needed (Liskin et al., 2014, as reviewed by Sporsem et al., 2026, P2). Small items also gave developers short-term certainty inside long-term uncertainty, which Vidgen and Wang (2009) relate to Baskerville's (2006) ``artful planning''. The same review warns that the benefit fades at scale, where many small items must be regrouped to keep an overview; in the model that regrouping belongs to layers 1 and 4, not to the increment.
 
 The cycle formalises what practitioners already report doing. Karpathy describes the same alternation as a generation-verification loop to be spun as fast as possible in small chunks. Horthy places the human checkpoints on research and plans rather than on code. Cherny names the agent's ability to verify its own work as the practice that matters most. The model adds two things those accounts leave implicit: that the verification artifact is owned and locked by a person, and that the reviewer of each artifact starts without context.
 
@@ -840,7 +871,11 @@ The \texttt{tests/acceptance/} folder carries its own rule: the implementing age
 
 Each layer returns a signal to the one above when reality contradicts it: a failing test creates a new step; repeated steps become a pattern; a pattern that does not fit changes the model; recurring model-code drift reopens a decision; a decision that meets an ambiguous term returns to the glossary; the domain may show that the problem was a different one. The top layer closes the ring by returning new scenarios to the evidence layer. Returns slow down as they rise, so that the system does not oscillate, and each leaves a line in \texttt{log.md}.
 
+Not every artifact must be kept current. Sporsem et al.\ (2026, P5) find that written user stories degrade once implemented and ask whether this is a problem at all, since the story has served its purpose. The model accepts that answer for layer 6: a change folder is a reminder of a conversation, and it is archived rather than maintained. It rejects it for layers 1--5 and 7, which agents read as current truth in every session. A stale story misleads one newcomer once; a stale contract misleads every agent run. The ring therefore applies only to the layers that are read as current.
+
 Alongside artifact sensors, the ring has sensors for cognitive debt, taken from Storey's diagnostic signals: changes with unexpected results, components nobody wants to touch, knowledge concentrated in one person. The response to these is never a generated document. It is a human practice: an explanation, a walkthrough, a pairing session.
+
+Agile teams already had such a practice. In a longitudinal case, developers working in rotating pairs spread their understanding of user needs well beyond what the written stories held (Vidgen and Wang, 2009). Rotation can survive when agents write the code: the pair's task becomes reading the bounds together and explaining a change to each other.
 
 \subsection{Code that both readers understand}
 
@@ -872,6 +907,34 @@ Folders by technical layer only & Avoid & Separates what changes together \\
 \normalsize
 
 The criterion for any abstraction becomes a single question: does it reduce what a human and an agent must read to change something safely?
+
+\subsection{The bounds as boundary objects}
+
+Read through boundary object theory (Section 2.6), the model's human-owned layers are boundary objects between people and agents, and each addresses one of Carlile's (2002) knowledge boundaries (Table~\ref{tab:boundaries}).
+
+\small
+\begin{longtable}{p{0.12\linewidth}p{0.28\linewidth}p{0.22\linewidth}p{0.28\linewidth}}
+\caption{Carlile's knowledge boundaries between people and agents.}\label{tab:boundaries}\\
+\toprule
+\textbf{Boundary} & \textbf{What goes wrong between people and agents} & \textbf{Layer that carries it} & \textbf{Check in the model} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Boundary} & \textbf{What goes wrong between people and agents} & \textbf{Layer that carries it} & \textbf{Check in the model} \\
+\midrule
+\endhead
+Syntactic & The agent uses words the team does not use, or invents names & 2. Domain (glossary) & Names in domain language; goldfish flag undefined terms \\
+Semantic & The agent reads the same words differently from the team & 7. Evidence (executable scenarios) & A scenario passes or fails; a second reading cannot pass silently \\
+Pragmatic & Interests conflict: speed against structure, one team's change against another's & 3. Decisions (ADRs) and the human gate & People decide; agents propose a revision when a signal repeats \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+Two consequences follow. First, an executable scenario crosses the semantic boundary in a way a user story could not. The story left meaning to a later conversation; a scenario fixes it in a form that a person and an agent check the same way. This is the strongest theoretical reason for H2. Second, the pragmatic boundary cannot be delegated. Carlile holds that crossing it requires the parties to transform their knowledge and to be able to alter the object; an agent can propose, but the trade-off between interests stays with people. This is why layers 1--3 are human-owned.
+
+Levina and Vaast's (2005) distinction gives a test for the gate. An approved artifact that nobody reads again is a designated boundary object, not one in use, and repeated approval without reading (Section 4.2, AI-DLC) produces exactly that. The explain-back at the gate and the goldfish review exist to keep the bounds in use. H5's measure of artifact age is, in these terms, a measure of how long a bound stays in use. Sporsem et al.'s (2026) open questions on how people and language models read the same requirement at each boundary map onto H2 (semantic) and H3 (syntactic) of this agenda.
+
+The theory also names a tension the model must hold. Crossing a pragmatic boundary requires interpretive flexibility: an object each group can read from its own interests while it stays a common reference (Star, 2010; Doolin and McLeod, 2012). An executable scenario removes that flexibility by design. The model therefore keeps the two properties in different layers: the prose of layers 1--3 stays open to negotiation; the scenarios of layer 7 are closed to implementing agents from step 3 of the cycle (Section 7.4) but stay open to people until the gate at step 5, where the negotiation ends. Treating a scenario as final before the pragmatic boundary is crossed would turn one group's reading into everyone's constraint. Boundary objects are also in use only for periods (Sporsem et al., 2026): a bound that people have stopped reading has become a designated object again, whatever its age.
 
 % ==========================================================================
 \section{Contrast with the software engineering canon}
@@ -924,7 +987,7 @@ The Manifesto (Beck et al., 2001) is often read as a rejection of documentation 
 
 \small
 \begin{longtable}{p{0.24\linewidth}p{0.24\linewidth}p{0.34\linewidth}p{0.1\linewidth}}
-\caption{The four values of the Agile Manifesto under bounded delegation.}\\
+\caption{The four values of the Agile Manifesto under bounded delegation.}\label{tab:manifesto}\\
 \toprule
 \textbf{Value} & \textbf{Original concern} & \textbf{Reading under bounded delegation} & \textbf{Verdict} \\
 \midrule
@@ -941,7 +1004,7 @@ Responding to change over following a plan & Plans outlived the facts they were 
 \end{longtable}
 \normalsize
 
-Several of the twelve principles shift in the same way. ``Working software is the primary measure of progress'' holds unchanged. ``Continuous attention to technical excellence and good design enhances agility'' gains empirical support from the code-health evidence. ``Simplicity, the art of maximising the amount of work not done'' becomes more important, because an agent's default is to produce more. ``Sustainable pace'' re-appears as a limit on pending human decisions (H6). The principle that face-to-face conversation is the most effective way to convey information needs qualification: it remains true among people, but an agent was not in the room, so the outcome of the conversation has to be written down before it can guide the work.
+Several of the twelve principles shift in the same way. ``Working software is the primary measure of progress'' holds unchanged. ``Continuous attention to technical excellence and good design enhances agility'' gains empirical support from the code-health evidence. ``Simplicity, the art of maximising the amount of work not done'' becomes more important, because an agent's default is to produce more. ``Sustainable pace'' re-appears as a limit on pending human decisions (H6). The principle that face-to-face conversation is the most effective way to convey information needs qualification: it remains true among people, but an agent was not in the room, so the outcome of the conversation has to be written down before it can guide the work. Sedano, Ralph, and P\'eraire (2019) state the tension precisely: a good specification replaces face-to-face communication, while a good backlog facilitates it. Bounded delegation needs both. The bounds replace conversation for the agent, and must not replace it among people.
 
 Cockburn's (2006) description of development as a cooperative game of invention and communication survives well. The game now has a new kind of player, one that communicates only through written artifacts and remembers nothing between sessions. Much of the model in Section 7 is a response to that single property.
 
@@ -975,7 +1038,7 @@ If the fundamentals hold, why should practices change? Because much of the devel
 \midrule
 \endhead
 GitFlow and long-lived branches & Isolate slow human work and prepare scheduled releases & With many agents in parallel, integration costs as much as generation; long branches become the bottleneck & Single trunk, small batches, ephemeral workspace per agent, feature flags, merge queue & Rigorous version control and fast rollback \\
-Two-week sprints & Give planning and feedback a rhythm matched to human speed & Execution fits in hours; planning a task can take longer than doing it & Continuous flow with increments of hours to days & A cadence for reflection and goal alignment \\
+Two-week sprints & Give planning and feedback a rhythm matched to human speed & Execution fits in hours; planning a task can take longer than doing it & Continuous flow with increments of hours to days & A cadence for reflection and goal alignment; a window in which priorities hold still \\
 Story points, planning poker, velocity & Forecast the capacity of a human team & Agent execution time is cheap and unpredictable per task & A limit on pending decisions and reviews per person; flow and outcome metrics & Slicing work small \\
 Daily status meeting & Know who is doing what & State is in the repository and the feedback log & Ring signals and the gate queue & Conversation about blockers and understanding \\
 Board with hand-off columns (dev, review, QA) & Make staged human work visible & Stages merge into an automated pipeline & Pipeline plus a queue of human gates & Limiting work in progress, the core Kanban principle \\
@@ -987,7 +1050,9 @@ Hand-off documents (PRD, then design, then tasks) & Transfer context between spe
 \end{longtable}
 \normalsize
 
-Three qualifications apply. First, obsolete does not mean wrong: these practices solved real problems, and the principles behind them (small batches, fast feedback, limited work in progress) become more important, not less. DORA's research associates AI adoption with both higher throughput and higher instability and names small batches and strong version control among the capabilities that counter it (\href{https://cloud.google.com/blog/products/ai-machine-learning/from-adoption-to-impact-putting-the-dora-ai-capabilities-model-to-work}{Google Cloud}). Second, the evidence is young. Much of the debate on the end of sprints comes from opinion pieces (\href{https://dev.to/remojansen/scrum-is-finally-dead-and-we-have-to-thank-coding-agents-for-that-18bi}{Jansen}; \href{https://blog.doubleslash.de/en/software-technologien/devops/sprints-in-the-ai-age-ai-coding-agents/}{doubleSlash}), and there are experiments in the opposite direction, such as a working paper on 324 two-hour agent-run sprints which concludes that continuous integration and merging cost as much time as generation (\href{https://daveremy.github.io/agent-scrum/}{Agent Scrum}). Third, context matters: regulated organisations, hardware programmes, and fixed-date contracts will keep coordination cadences, and even there the emerging proposal is a dual rhythm, with execution in flow and coordination in cadence (\href{https://agility-at-scale.com/safe/ai-enabled-safe/safe-sprint-cadence-for-ai-teams-the-dual-rhythm-architecture/}{Agility at Scale}).
+Four qualifications apply. First, obsolete does not mean wrong: these practices solved real problems, and the principles behind them (small batches, fast feedback, limited work in progress) become more important, not less. DORA's research associates AI adoption with both higher throughput and higher instability and names small batches and strong version control among the capabilities that counter it (\href{https://cloud.google.com/blog/products/ai-machine-learning/from-adoption-to-impact-putting-the-dora-ai-capabilities-model-to-work}{Google Cloud}). Second, the evidence is young. Much of the debate on the end of sprints comes from opinion pieces (\href{https://dev.to/remojansen/scrum-is-finally-dead-and-we-have-to-thank-coding-agents-for-that-18bi}{Jansen}; \href{https://blog.doubleslash.de/en/software-technologien/devops/sprints-in-the-ai-age-ai-coding-agents/}{doubleSlash}), and there are experiments in the opposite direction, such as a working paper on 324 two-hour agent-run sprints which concludes that continuous integration and merging cost as much time as generation (\href{https://daveremy.github.io/agent-scrum/}{Agent Scrum}). Third, context matters: regulated organisations, hardware programmes, and fixed-date contracts will keep coordination cadences, and even there the emerging proposal is a dual rhythm, with execution in flow and coordination in cadence (\href{https://agility-at-scale.com/safe/ai-enabled-safe/safe-sprint-cadence-for-ai-teams-the-dual-rhythm-architecture/}{Agility at Scale}).
+
+A fourth qualification concerns sprints. Their rationale was not only to ration programmer hours. Fixed iterations in which the stories did not change gave one team a steady pace, freedom from distraction, and relief from anxiety (Vidgen and Wang, 2009; Sporsem et al., 2026, P2). Continuous flow removes that protection from the people who decide and review. Whatever replaces the sprint should keep a bounded window in which a person's queue of decisions does not change, which is what the limit on pending decisions in H6 is meant to provide.
 
 What changes is the planning unit. It stops being the programmer hour and becomes the pending human decision. A team is overloaded when it has more scenarios to check, decisions to make, and signals to answer than it can understand, not when it has too many tasks in progress.
 
@@ -1014,7 +1079,7 @@ The following recommendations are conditional on the hypotheses of Section 7.1 a
 6. Contract beside the code, model above & Contract README per component; C4 as DSL linking them & EGM; C4 (H4) \\
 7. Code health with a threshold & Measure complexity and cohesion in the pipeline; block regressions & Borg et al. \\
 8. Human review is the bottleneck & Limit pending decisions per person; reserve human reading for intent and evidence & DORA (H1, H6) \\
-9. Understanding as a deliverable & Explain-back at gates; walkthroughs; rotating ownership & Storey \\
+9. Understanding as a deliverable & Explain-back at gates; walkthroughs; rotating ownership and rotating pairs & Storey; Vidgen and Wang \\
 10. Measure outcomes and debts & Track user outcomes, stability, and the three debts; never tokens or lines & DORA \\
 \bottomrule
 \end{longtable}
@@ -1060,6 +1125,8 @@ Testing $H_0$ as a whole requires measures for all three debts, since a purely t
   \item \textbf{Cognitive debt:} onboarding time to a first unassisted approved change; knowledge concentration per component in version history; the ability of approvers to explain, unaided, a change they approved; the frequency of changes with unexpected results (Storey, 2026).
 \end{itemize}
 
+Agile requirements engineering offers baselines for intent debt. In 1,636 backlog items from 14 projects, 45.5\% held two or more requirements and more than half gave no justification (Van Can and Dalpiaz, 2024, as reviewed by Sporsem et al., 2026). The same counts can be taken on increments under each condition of Section 9.2. A further question belongs to the pragmatic boundary and is not covered by H1 to H6: who holds the power to phrase the bounds, and how asymmetries between technical and non-technical stakeholders shape what an agent is told (Sporsem et al., 2026, Table 6).
+
 \subsection{A comparative experiment}
 
 A fair comparative study would implement the same 20 to 30 changes under four conditions: a spec-first kit (Spec Kit or Kiro), OpenSpec, EGM, and the full Bounded Delegation model, measuring the three debts and throughput. Given METR's experience, in which a follow-up trial became hard to interpret because developers would no longer work without AI, the control condition should vary the \emph{method} rather than the presence of AI.
@@ -1068,14 +1135,16 @@ A fair comparative study would implement the same 20 to 30 changes under four co
 
 We expect the model to perform poorly, relative to simpler alternatives, on small short-lived systems where the cost of maintaining seven layers exceeds its benefit; in domains where behaviour is hard to express as end-to-end tests, such as exploratory data work or highly visual interfaces; and in teams without the programming skill needed to judge inspectable tests. Reporting these boundary conditions is part of the agenda.
 
+A fourth failure mode is abandonment. The model adds deliberate friction: interviews, explain-back at the gate, and isolated review. Agile requirements engineering shows where such friction can lead. Conversations triggered by user stories hampered developers' sense of productivity (Sporsem et al., 2026, P4), and in one longitudinal case a team under a ``get on with it'' manager dropped user stories altogether (McAvoy and Butler, 2005). H6 measures stability, not adoption, so the evaluation should also record whether teams still follow the practices after six and twelve months.
+
 % ==========================================================================
 \section{Threats to validity}
 
-\textbf{Construct validity.} The three debts are recent constructs. Technical debt has established measures; cognitive and intent debt do not, and the measures proposed in Section 9.1 are untested proxies. Assessments in Table~\ref{tab:results2} and the qualitative positioning described around Figure 1 are the author's qualitative judgement, not measurements.
+\textbf{Construct validity.} The three debts are recent constructs. Technical debt has established measures; cognitive and intent debt do not, and the measures proposed in Section 9.1 are untested proxies. The techniques themselves raise the same problem. User stories are operationalised so differently across companies that two may be distinct constructs (Sporsem et al., 2026), and ``spec-driven development'' likewise names practices that differ in unit, level, and verification. Assessments in Table~\ref{tab:results2} and the qualitative positioning described around Figure 1 are the author's qualitative judgement, not measurements.
 
-\textbf{Internal validity.} The review is narrative and was conducted by a single author without a registered protocol or independent coding, so selection and interpretation bias are possible. The model was developed by the same author who performed the comparison, which favours a reading in which the gaps found match the solution proposed.
+\textbf{Internal validity.} The review is narrative and was conducted by a single author without a registered protocol or independent coding, so selection and interpretation bias are possible. The model was developed by the same author who performed the comparison, which favours a reading in which the gaps found match the solution proposed. Two practices used by Sporsem et al.\ (2026) would reduce this bias in a next version: independent screening by a second researcher, and asking the maintainers of each technique to confirm its description, as they asked the authors of their primary studies to confirm study contexts.
 
-\textbf{External validity.} Much of the evidence comes from vendor documentation, vendor-published telemetry, and practitioner essays. Tornhill's workflow is a single expert's account. EGM's claims about use at scale come from its publisher. Martin's current position is taken from secondary reports of his social-media posts, and the readings of the Manifesto in Table 7 are the author's interpretation, not its signatories'. The talks in Section 2.5 are expert opinion, read from published transcripts and summaries rather than viewed, and several speakers work for companies that sell the tools they describe (Anthropic, OpenAI, HumanLayer). The empirical studies in Section 2.2 cover specific populations (experienced open-source maintainers, survey respondents, small Python files) and may not generalise to other settings.
+\textbf{External validity.} Much of the evidence comes from vendor documentation, vendor-published telemetry, and practitioner essays. Tornhill's workflow is a single expert's account. EGM's claims about use at scale come from its publisher. Martin's current position is taken from secondary reports of his social-media posts, and the readings of the Manifesto in Table~\ref{tab:manifesto} are the author's interpretation, not its signatories'. The talks in Section 2.5 are expert opinion, read from published transcripts and summaries rather than viewed, and several speakers work for companies that sell the tools they describe (Anthropic, OpenAI, HumanLayer). The empirical studies in Section 2.2 cover specific populations (experienced open-source maintainers, survey respondents, small Python files) and may not generalise to other settings. Unlike theoretical reviews restricted to peer-reviewed empirical studies (Sporsem et al., 2026), most sources here are grey literature, so the findings are closer to a map of claims than to a synthesis of evidence. Coverage of contexts limits external validity further. The user story literature is concentrated on business software in Europe and North America, with South America, Africa, and much of Asia under-represented (Sporsem et al., 2026). The evidence here has the same skew. Replications in under-represented settings, Brazil among them, would test whether the hypotheses travel.
 
 \textbf{Temporal validity.} The field moves quickly. Tessl repositioned itself in January 2026, AI-DLC reorganised its folder structure between versions, and EGM was open-sourced weeks before this snapshot (November 2026). METR flagged its own 2025 result as dated within a year. Conclusions tied to specific tools may not hold for long; the comparison framework and the hypotheses are intended to outlast them.
 
@@ -1086,9 +1155,9 @@ We expect the model to perform poorly, relative to simpler alternatives, on smal
 
 We reviewed eleven approaches to agent-assisted development and compared them on nine criteria. On RQ1, the techniques converge on writing before coding, storing knowledge as Markdown in the repository, and approving at human gates, but diverge on the unit of knowledge, and that choice determines what each sees and what it loses. On RQ2, intent debt is widely addressed at delivery and rarely kept from returning; cognitive debt is a blind spot; and verification is split between checking prose and checking behaviour.
 
-On RQ3, we proposed the Bounded Delegation hypothesis: delegation of implementation to agents is sustainable when bounded by human-owned intent on one side and human-readable executable evidence on the other, with both bounds verified independently and kept current by feedback. The model built on it takes current-truth separation from OpenSpec, co-located contracts and context-free review from EGM, inspectable executable scenarios from Tornhill, and an explicit architecture model and decision records from established practice. Its operational summary is one sentence: humans read intent and evidence; agents read and write the path between them.
+On RQ3, we proposed the Bounded Delegation hypothesis: delegation of implementation to agents is sustainable when bounded by human-owned intent on one side and human-readable executable evidence on the other, with both bounds verified independently and kept current by feedback. The model built on it takes current-truth separation from OpenSpec, co-located contracts and context-free review from EGM, inspectable executable scenarios from Tornhill, and an explicit architecture model and decision records from established practice. Its operational summary is one sentence: humans read intent and evidence; agents read and write the path between them. Read through boundary object theory, the two bounds are boundary objects between people and agents, and the model is a successor to the card and confirmation of agile requirements engineering, not a break from it.
 
-On RQ4, the contrast with the canon shows more continuity than rupture. Brooks's distinction between essence and accident, Sommerville's four fundamental activities, Pressman's quality focus, Parnas's information hiding, and Lehman's laws all hold; what changes is who performs which activity, and who reads the code. The Agile Manifesto's values survive, with recorded intent no longer optional and executable scenarios serving as documentation that runs. Its authors now disagree on whether people should still read implementation, which is the question H1 puts to test. The practices designed to ration programmer hours (long-lived branches, time-boxed sprints, velocity estimation, hand-off boards, release trains) lose their rationale when the scarce resource becomes human attention, while the principles beneath them (small batches, fast feedback, limited work in progress) gain importance.
+On RQ4, the contrast with the canon shows more continuity than rupture. Brooks's distinction between essence and accident, Sommerville's four fundamental activities, Pressman's quality focus, Parnas's information hiding, and Lehman's laws all hold; what changes is who performs which activity, and who reads the code. The Agile Manifesto's values survive, with recorded intent no longer optional and executable scenarios serving as documentation that runs. Its authors now disagree on whether people should still read implementation, which is the question H1 puts to test. The practices designed to ration programmer hours (long-lived branches, time-boxed sprints, velocity estimation, hand-off boards, release trains) lose their rationale when the scarce resource becomes human attention, while the principles beneath them (small batches, fast feedback, limited work in progress) gain importance. One function of the sprint does not lose its rationale: the stability fixed iterations gave the people who decide, which the model must replace rather than drop.
 
 None of this has been tested. The contribution of this paper is a framework for comparison, a hypothesis precise enough to be wrong, and an agenda for finding out. Naur's thesis still stands behind it: what must be preserved is the theory of the system. What has changed is that losing it now costs more and happens faster.
 
@@ -1193,6 +1262,35 @@ None of this has been tested. The contribution of this paper is a framework for 
   \item \href{https://www.usetranscribe.io/yt/rmvDxxNubIg/ai-in-software}{Horthy, D. (2025). \emph{No Vibes Allowed: Solving Hard Problems in Complex Codebases}. AI Engineer Code Summit. Transcript.}
   \item \href{https://singjupost.com/andrej-karpathy-software-is-changing-again/}{Karpathy, A. (2025). \emph{Software Is Changing (Again)}. YC AI Startup School. Transcript.}
   \item \href{https://conf.researchr.org/details/TechDebt-2026/TechDebt-2026-techdebt-program/3/From-Technical-Debt-to-Cognitive-Debt}{Storey, M.-A. (2026). \emph{From Technical Debt to Cognitive Debt}. Keynote, TechDebt 2026.} \href{https://techleadjournal.dev/episodes/264/}{Interview, Tech Lead Journal 264.}
+\end{itemize}
+
+\textbf{Requirements engineering and boundary objects}
+\begin{itemize}[leftmargin=*]
+  \item Ananjeva, A., Persson, J. S., \& Bruun, A. (2020). Integrating UX work with agile development through user stories: an action research study in a small software company. \emph{Journal of Systems and Software}, 170, 110785.
+  \item Baskerville, R. L. (2006). Artful planning. \emph{European Journal of Information Systems}, 15(2), 113--115.
+  \item Behutiye, W., et al. (2020). Management of quality requirements in agile and rapid software development: a systematic mapping study. \emph{Information and Software Technology}, 123, 106225.
+  \item Carlile, P. R. (2002). A pragmatic view of knowledge and boundaries: boundary objects in new product development. \emph{Organization Science}, 13(4), 442--455.
+  \item Conboy, K. (2021). Enabling Promethean leaps: an examination of storytelling techniques in information systems development. \emph{Communications of the AIS}, 48, 35.
+  \item Diebold, P., Theobald, S., Wahl, J., \& Rausch, Y. (2018). An agile transition starting with user stories, DoD \& DoR. \emph{Proceedings of ICSSP 2018}, 147--156.
+  \item Doolin, B., \& McLeod, L. (2012). Sociomateriality and boundary objects in information systems development. \emph{European Journal of Information Systems}, 21(5), 570--586.
+  \item Jeffries, R. (2001). Essential XP: Card, Conversation, Confirmation. ronjeffries.com.
+  \item Kasauli, R., Knauss, E., Horkoff, J., Liebel, G., \& de Oliveira Neto, F. G. (2021). Requirements engineering challenges and practices in large-scale agile system development. \emph{Journal of Systems and Software}, 172, 110851.
+  \item Kniberg, H. (2015). \emph{Scrum and XP from the Trenches}. Lulu.com.
+  \item Levina, N., \& Vaast, E. (2005). The emergence of boundary spanning competence in practice. \emph{MIS Quarterly}, 29(2), 335--363.
+  \item Liskin, O., Pham, R., Kiesling, S., \& Schneider, K. (2014). Why we need a granularity concept for user stories. \emph{XP 2014}, 110--125.
+  \item Matthies, C., Heinrich, R., \& Wohlrab, R. (2023). Investigating software engineering artifacts in DevOps through the lens of boundary objects. \emph{Proceedings of EASE 2023}, 12--21.
+  \item McAvoy, J., \& Butler, T. (2005). A paradox of the change to user stories: the application of the theory of competing commitments. \emph{ECIS 2005 Proceedings}.
+  \item Meyer, B. (2018). Making sense of agile methods. \emph{IEEE Software}, 35(2), 91--94.
+  \item Pareto, L., Eriksson, P., \& Ehnebom, S. (2010). Architectural descriptions as boundary objects in system and design work. \emph{MODELS 2010}, 406--419.
+  \item Potts, C., \& Hsi, I. (1997). Abstraction and context in requirements engineering: toward a synthesis. \emph{Annals of Software Engineering}, 3(1), 23--61.
+  \item Sedano, T., Ralph, P., \& P\'eraire, C. (2019). The product backlog. \emph{Proceedings of ICSE 2019}, 200--211.
+  \item \href{https://doi.org/10.1016/j.jss.2025.112693}{Sporsem, T., Dings{\o}yr, T., \& Stol, K.-J. (2026). User stories as boundary objects in agile requirements engineering: a theoretical literature review. \emph{Journal of Systems and Software}, 233, 112693.}
+  \item Star, S. L. (2010). This is not a boundary object: reflections on the origin of a concept. \emph{Science, Technology, \& Human Values}, 35(5), 601--617.
+  \item Star, S. L., \& Griesemer, J. R. (1989). Institutional ecology, `translations' and boundary objects. \emph{Social Studies of Science}, 19(3), 387--420.
+  \item Tiwana, A. (2004). An empirical study of the effect of knowledge integration on software development performance. \emph{Information and Software Technology}, 46(13), 899--906.
+  \item Van Can, A. T., \& Dalpiaz, F. (2024). Requirements information in backlog items: content analysis. \emph{REFSQ 2024}, 305--321.
+  \item Vidgen, R., \& Wang, X. (2009). Coevolving systems and the organization of agile software development. \emph{Information Systems Research}, 20(3), 355--376.
+  \item Wohlrab, R., Pelliccione, P., Knauss, E., \& Larsson, M. (2019). Boundary objects and their use in agile systems engineering. \emph{Journal of Software: Evolution and Process}, 31(5), e2166.
 \end{itemize}
 
 \textbf{Method and foundations}

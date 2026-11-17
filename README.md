@@ -13,7 +13,8 @@ Verification, not generation, is the bottleneck now. This repo holds two things:
   delegation is bounded on both sides by artifacts humans own — intent before the work, and
   human-readable executable evidence after it.
 - The **full academic paper** behind it: a multivocal review of eleven agent-oriented
-  development techniques, a formal model with six falsifiable sub-hypotheses, an evaluation
+  development techniques, a formal model with six falsifiable sub-hypotheses, a reading of its two bounds as
+  boundary objects (building on agile requirements engineering), an evaluation
   agenda, and a contrast with the software engineering canon (Brooks, Sommerville, Parnas,
   Naur, the Agile Manifesto).
 
@@ -31,7 +32,7 @@ Verification, not generation, is the bottleneck now. This repo holds two things:
 ├── .nojekyll               disables Jekyll processing — this is a hand-written static site
 ├── paper/
 │   ├── main.tex             the full academic paper — the canonical source
-│   ├── main.pdf             compiled PDF (builds cleanly, 36 pages)
+│   ├── main.pdf             compiled PDF (builds cleanly, 41 pages)
 │   └── README.md            build instructions
 └── LICENSE                  CC0 1.0 (public domain)
 ```

@@ -97,6 +97,8 @@ Under Bounded Delegation, software engineering knowledge is structured across **
 
 Humans own the bounds (Layers 1–3 and Layer 7). Agents read, write, and maintain the implementation path between them (Layers 4–6). Humans stop spending hours reading raw implementation diffs line-by-line; instead, they verify that the evidence satisfies the intent.
 
+The idea has a precedent. Agile teams have long paired a short user story with acceptance tests: Ron Jeffries's "card, conversation, confirmation". A 2026 review of the empirical research on user stories (Sporsem, Dingsøyr & Stol, *Journal of Systems and Software*) shows why that practice strains under agents: the understanding a story creates lives in the heads of the people who discussed it, and the written story decays once the work ships. An agent is a permanent newcomer who was in none of those conversations. Bounded Delegation keeps the card and the confirmation, makes both readable by an agent, and locks the confirmation so the agent cannot edit it.
+
 ### Comparing Test Specs: Raw Agent Output vs. Domain-Inspectable Evidence
 
 Inspired by Adam Tornhill's AI-first workflow, executable evidence must be written in high-level domain language so human experts can verify system behavior at a glance without reading lower-level implementation details.
@@ -162,6 +164,8 @@ When human decision-making bandwidth — not typing capacity — is the bottlene
 | **Release Trains & Quarterly Planning** (synchronizes cross-team human dependencies) | Continuous Deployment with Contract Enforcement | Cross-team coordination shifts to machine-checked contracts, policy files, and flag-based rollouts. |
 
 Core Agile values — such as customer collaboration and delivering working software — remain fully intact. However, operational tools like story points, velocity metrics, and time-boxed sprints lose their purpose when machine implementation takes minutes, shifting the central challenge entirely to managing human review queues.
+
+One caveat: sprints did more than ration programmer hours. Fixed iterations gave people a stable window in which priorities did not change. Whatever replaces the sprint has to keep that window for the humans who decide and review, for example by capping how many pending decisions each person holds.
 
 ## 6. Takeaway 5: Code Health Matters More for Machines Than It Ever Did for Humans
 
