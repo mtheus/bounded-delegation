@@ -30,6 +30,8 @@ Verification, not generation, is the bottleneck now. This repo holds two things:
 ├── article.md             the same blog post, in Markdown (for GitHub browsing/social sharing)
 ├── article.html            the FULL academic paper, converted to HTML for free online reading
 ├── .nojekyll               disables Jekyll processing — this is a hand-written static site
+├── AGENTS.md              notes for coding agents: study goal and source-of-truth rules
+├── CLAUDE.md              imports AGENTS.md for Claude Code
 ├── paper/
 │   ├── main.tex             the full academic paper — the canonical source
 │   ├── main.pdf             compiled PDF (builds cleanly, 41 pages)
@@ -41,6 +43,10 @@ Verification, not generation, is the bottleneck now. This repo holds two things:
 change in the other. `article.html` is a separate, full HTML conversion of `paper/main.tex` —
 the actual academic paper, not the blog post. If you revise the paper's argument, edit
 `paper/main.tex` first, then regenerate `article.html` and `paper/main.pdf`.
+
+Revisions are drafted and discussed in a Claude Docs copy of the paper; agreed changes are
+ported into `paper/main.tex`, which stays the source of truth. `AGENTS.md` gives coding agents
+the study's goal and the same rules.
 
 ## License
 
