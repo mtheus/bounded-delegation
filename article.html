@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Why AI Coding Agents Are Breaking Software Engineering</title>
-<meta name="description" content="Why AI coding agents are breaking software engineering, and the Bounded Delegation Hypothesis: a framework for dividing context and decision between humans and coding agents.">
+<meta name="description" content="A short summary: why AI coding agents are breaking software engineering, and the Bounded Delegation Hypothesis for dividing context and decision between humans and coding agents.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Why AI Coding Agents Are Breaking Software Engineering (And What to Do About It)">
 <meta property="og:description" content="The Bounded Delegation Hypothesis: delegation to coding agents is sustainable only when bounded by human-owned Intent and human-readable Evidence.">
@@ -13,16 +13,9 @@
 <meta name="author" content="Matheus Bastos Neves">
 <style>
   :root{
-    --bg:#faf8f4;
-    --bg-raised:#ffffff;
-    --text:#1b1b18;
-    --text-dim:#5c5850;
-    --border:#e4ddd1;
-    --accent:#9a3b28;
-    --accent-ink:#ffffff;
-    --card-bg:#ffffff;
-    --code-bg:#f1ede3;
-    --quote-border:#c9a98a;
+    --bg:#faf8f4; --bg-raised:#ffffff; --text:#1b1b18; --text-dim:#5c5850;
+    --border:#e4ddd1; --accent:#9a3b28; --accent-ink:#ffffff;
+    --card-bg:#ffffff; --code-bg:#f1ede3; --quote-border:#c9a98a;
     --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
@@ -41,19 +34,28 @@
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);}
-  .wrap{max-width:720px;margin:0 auto;padding:40px 24px 100px;}
+  .wrap{max-width:680px;margin:0 auto;padding:40px 24px 100px;}
   .topnav{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px;font-size:0.9rem;}
   .topnav a{color:var(--text-dim);text-decoration:none;}
   .topnav a:hover{color:var(--accent);}
-  article{font-family:var(--font-serif);font-size:1.08rem;line-height:1.75;}
+  article{font-family:var(--font-serif);font-size:1.1rem;line-height:1.78;}
   h1{font-size:2rem;line-height:1.2;margin:0 0 6px;letter-spacing:-0.01em;}
-  .byline{font-family:var(--font-sans);font-size:0.92rem;color:var(--text-dim);margin-bottom:34px;}
+  .byline{font-family:var(--font-sans);font-size:0.92rem;color:var(--text-dim);margin-bottom:10px;}
   .byline a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--accent);}
-  h2{font-size:1.4rem;margin:44px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
-  h3{font-size:1.15rem;margin:30px 0 10px;color:var(--text);}
+  .note{
+    font-family:var(--font-sans);
+    font-size:0.88rem;
+    font-style:italic;
+    color:var(--text-dim);
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px 16px;
+    margin:22px 0 34px;
+  }
+  .note a{color:var(--text-dim);}
+  h2{font-size:1.32rem;margin:40px 0 12px;}
   p{margin:0 0 16px;}
-  ul,ol{margin:0 0 16px;padding-left:1.3em;}
-  li{margin-bottom:6px;}
   blockquote{
     margin:20px 0;
     padding:4px 20px;
@@ -63,44 +65,29 @@
     font-style:italic;
   }
   blockquote p{margin:10px 0;}
-  pre{
-    font-family:var(--font-mono);
-    font-size:0.82rem;
-    background:var(--code-bg);
-    border:1px solid var(--border);
-    border-radius:8px;
-    padding:14px 16px;
-    overflow-x:auto;
-    line-height:1.5;
-  }
-  code{font-family:var(--font-mono);font-size:0.92em;background:var(--code-bg);padding:1px 5px;border-radius:4px;}
-  pre code{background:none;padding:0;}
-  .abstract-box{
+  code{font-family:var(--font-mono);font-size:0.9em;background:var(--code-bg);padding:1px 5px;border-radius:4px;}
+  .cta{
     font-family:var(--font-sans);
+    font-size:0.98rem;
     background:var(--card-bg);
     border:1px solid var(--border);
-    border-radius:12px;
-    padding:22px 24px;
-    font-size:0.96rem;
-    color:var(--text);
-    margin-bottom:20px;
+    border-radius:10px;
+    padding:18px 20px;
+    margin:36px 0;
   }
-  .abstract-box h2{margin-top:0;border:none;font-family:var(--font-sans);font-size:1rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);padding-bottom:0;}
-  table{width:100%;border-collapse:collapse;margin:16px 0;font-family:var(--font-sans);font-size:0.88rem;}
-  th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top;}
-  th{background:var(--code-bg);}
-  hr{border:none;border-top:1px solid var(--border);margin:44px 0;}
+  .cta a{color:var(--accent);font-weight:600;text-decoration:none;}
+  hr{border:none;border-top:1px solid var(--border);margin:40px 0;}
   footer{
     font-family:var(--font-sans);
     border-top:1px solid var(--border);
     padding-top:24px;
     font-size:0.86rem;
     color:var(--text-dim);
-    margin-top:40px;
+    margin-top:24px;
   }
   footer a{color:var(--text-dim);}
   .bib{font-family:var(--font-mono);font-size:0.82rem;background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow-x:auto;white-space:pre;}
-  @media (max-width:560px){ h1{font-size:1.6rem;} article{font-size:1rem;} }
+  @media (max-width:560px){ h1{font-size:1.6rem;} article{font-size:1.02rem;} }
 </style>
 </head>
 <body>
@@ -117,183 +104,38 @@
       (And What to Do About It) &middot; <strong>Matheus Bastos Neves</strong>, Independent Researcher &middot;
       <a href="https://www.linkedin.com/in/matheusbn/" target="_blank" rel="noopener">linkedin.com/in/matheusbn</a> &middot; November 2026
     </div>
-
-    <div class="abstract-box">
-      <h2>Abstract</h2>
-      <p>AI coding agents have made individual developers dramatically faster at writing code, yet team-level delivery outcomes are deteriorating: review queues are growing, pull requests are getting larger and less reviewed, and bug rates are rising. This paper argues that code generation is no longer the bottleneck in software engineering &mdash; verification is. Drawing on recent empirical research (controlled experiments, large-scale telemetry, and a landmark trial with experienced open-source maintainers), we show that developers consistently overestimate the productivity gains of AI assistance while measurable delivery outcomes decline. We introduce a three-layer model of software debt &mdash; Technical, Cognitive, and Intent debt &mdash; to explain why superficially clean, agent-generated code can still erode a team's ability to safely evolve a system. To address this, we formalize the <strong>Bounded Delegation Hypothesis (H&#8320;)</strong>: delegating implementation to coding agents is sustainable if, and only if, delegation is bounded on one side by human-owned Intent (problem statement, domain language, architectural decisions) and on the other side by human-readable Evidence (executable scenarios and test results). We derive a seven-layer knowledge model that operationalizes this hypothesis, discuss its implications for Agile practices built around capacity-constrained planning, and argue that code health matters more &mdash; not less &mdash; once machines, not only humans, must reason about it. We close with concrete diagnostic signals engineering leaders can use to detect cognitive and intent debt before it causes system-level collapse.</p>
+    <div class="note">
+      This is a short summary. Read the complete argument, data, and the formal Bounded Delegation framework in the
+      <a href="https://github.com/mtheus/bounded-delegation/blob/main/paper/main.tex" target="_blank" rel="noopener">full paper (LaTeX source)</a>
+      &mdash; arXiv preprint coming soon.
     </div>
 
-    <h2>1. Introduction: The AI Productivity Trap</h2>
-    <p>We are living through a strange paradox in modern software engineering. AI coding agents are writing code with incredible fluency, boosting individual developer speed by over 50% on targeted implementation tasks. Yet, across engineering organizations, team-level outcomes tell a dawning, uncomfortable story. Engineering leaders report rising delivery instability, skyrocketing pull-request review times, and little to no measurable improvement in company-level business metrics.</p>
-    <p>For the past two years, the tech industry operated under the assumption that generative AI tools would resolve software engineering bottlenecks by automating line-by-line implementation. In reality, flooding repositories with machine-generated code has exposed a much deeper architectural issue: the rapid breakdown of human context, decision-making clarity, and structural software health. As coding agents generate lines of code faster than human teams can process them, engineering leaders must recognize that code generation is no longer the rate-limiting step &mdash; and fundamentally reshape their software development lifecycle.</p>
+    <p>AI coding agents are writing code with incredible fluency, boosting individual developer speed by over 50% on targeted tasks. Yet across engineering organizations, delivery is getting <em>less</em> stable: review queues are growing, pull requests are getting bigger and less reviewed, and bug rates are rising. The industry bet that generative AI would resolve software engineering bottlenecks by automating implementation. It didn&rsquo;t &mdash; it just moved the bottleneck.</p>
 
-    <h2>2. Takeaway 1: Verification, Not Generation, Is the New Bottleneck</h2>
-    <p>Empirical research across thousands of software developers reveals a stark discrepancy between individual speed and team delivery. Controlled experiments (Peng et al., 2023) show individual developers completing tasks 55.8% faster with AI assistance. However, organizational research by DORA (2025/2026) highlights that while high AI adoption correlates with increased task throughput, it simultaneously brings higher overall delivery instability.</p>
-    <p>Telemetry from Faros AI (2025&ndash;2026), analyzing over 22,000 developers across 1,255 teams, reveals the mechanical breakdown of this trap:</p>
-    <ul>
-      <li>Merged pull request (PR) volume per developer grew by 98%, accompanied by a 154% increase in PR size and a 9% increase in bugs per developer.</li>
-      <li>Review time skyrocketed: the median time a PR spends in review rose by an astounding 441%.</li>
-      <li>Rubber-stamping proliferated: 31% of pull requests were merged with no human review at all.</li>
-    </ul>
-    <p>This breakdown is exacerbated by cognitive surrender (Shaw &amp; Nave, 2026) &mdash; the psychological phenomenon where humans adopt AI-generated output with minimal scrutiny, leading to inflated confidence even when outputs contain hidden flaws or security vulnerabilities (Veracode benchmarked over 100 LLMs and found 45% of generated code samples introduced known security weaknesses).</p>
-    <p>Nowhere is this perception gap more starkly demonstrated than in a landmark trial by METR (2025/2026). When experienced maintainers worked on tasks in their own mature repositories, tasks actually took 19% longer with AI assistance. Yet, the developers had forecast a 24% speedup beforehand and afterwards still believed they had been 20% faster. Developers feel significantly faster while delivery actually slows down.</p>
-    <p>The emerging consensus among top industry practitioners &mdash; including Andrej Karpathy, Dave Farley, and Boris Cherny &mdash; is unanimous. As Dave Farley succinctly frames it:</p>
-    <blockquote><p>&ldquo;Verification, not generation, is the new constraint in software engineering. In current workflows, the AI generates and the human verifies; because no human can read thousands of generated lines carefully enough to maintain true ownership, trust must come from executable specifications and continuous automated verification rather than manual code inspection.&rdquo;</p></blockquote>
-    <p>When developers are tasked with inspecting thousands of machine-generated lines diff-by-diff, cognitive fatigue sets in. Line-by-line human code review becomes physically impossible at scale, forcing teams into a binary failure mode: either PR queues stall indefinitely or engineers rubber-stamp unverified, fragile code straight into production.</p>
+    <h2>Verification, not generation, is the new constraint</h2>
+    <p>Controlled experiments show individual developers completing tasks over 50% faster with AI assistance. But organizational telemetry tells a different story: PR volume and size are up, median review time has risen by hundreds of percent, and a meaningful share of pull requests now merge with no human review at all. In a landmark trial, experienced maintainers working in their own mature repositories actually took <em>longer</em> with AI assistance &mdash; while still believing, afterward, that they had been faster. No human can read thousands of AI-generated lines carefully enough to maintain true ownership. Trust has to come from executable specifications and automated verification, not manual line-by-line review.</p>
 
-    <h2>3. Takeaway 2: Technical Debt Is Falling, but Cognitive and Intent Debt Are Exploding</h2>
-    <p>To understand why AI causes codebase instability despite writing superficially clean code, we must turn to Dr. Margaret-Anne Storey&rsquo;s Triple Debt Model (2026). Storey divides software debt into three distinct structural layers:</p>
-    <ol>
-      <li><strong>Technical Debt</strong>: code and structural defects that limit how easily a system can be modified.</li>
-      <li><strong>Cognitive Debt</strong>: the erosion of shared mental models, domain intuition, and architectural understanding held by human developers about the system.</li>
-      <li><strong>Intent Debt</strong>: the absence of recorded goals, constraints, domain definitions, and design rationale that both humans and agents can consult over time.</li>
-    </ol>
-    <pre>          ┌─────────────────────────────────────────┐
-          │               INTENT DEBT                │
-          │   (Missing rationale, goals &amp; context)   │
-          └────────────────────┬──────────────────────┘
-                                │
-                                ▼
-          ┌─────────────────────────────────────────┐
-          │              COGNITIVE DEBT              │
-          │   (Erosion of human mental models)       │
-          └────────────────────┬──────────────────────┘
-                                │
-                                ▼
-          ┌─────────────────────────────────────────┐
-          │              TECHNICAL DEBT              │
-          │   (Code &amp; structural defects)            │
-          └─────────────────────────────────────────┘</pre>
-    <p>While AI agents reduce technical debt by making boilerplate creation and superficial refactoring frictionless, they dramatically accelerate cognitive and intent debt. The core mechanism is straightforward: coding agents start every single session with zero tacit context about the system. Whatever business rationale, historical trade-offs, or architectural constraints are not explicitly recorded in written artifacts, the agent infers. It fills in the blanks by generating code that is syntactically correct, passes basic checks, and is structurally misaligned with unwritten domain rules.</p>
-    <p>This reality underscores Peter Naur&rsquo;s seminal 1985 insight:</p>
-    <blockquote><p>&ldquo;Programming is theory building: the code is only the visible trace of an understanding held by the people who wrote it, and when that understanding is lost the program begins to die even if the code is intact.&rdquo;</p></blockquote>
-    <p>When teams attempt to bridge this gap by prompting generative AI to auto-generate documentation, they suffer from what Storey terms the automation of understanding. Generating artifacts without human cognitive effort creates a dangerous illusion of documented knowledge while systematically destroying the human mental model required to maintain the software.</p>
-    <p>To diagnose cognitive debt before system collapse, engineering leaders must monitor concrete diagnostic signals rather than lines written:</p>
-    <ul>
-      <li><strong>Onboarding time to first unassisted PR</strong>: how long it takes a new engineer to safely deliver changes.</li>
-      <li><strong>Knowledge concentration</strong>: the degree to which commit history and domain comprehension are locked in a single individual.</li>
-      <li><strong>Approver explain-back capacity</strong>: whether a human reviewer can explain, in their own words, the architectural impact of a change at a human approval gate.</li>
-    </ul>
+    <h2>Three kinds of debt &mdash; and AI only pays down one of them</h2>
+    <p>Software debt isn&rsquo;t one thing. <strong>Technical debt</strong> is defects in the code itself. <strong>Cognitive debt</strong> is the erosion of the shared mental models developers hold about a system. <strong>Intent debt</strong> is the absence of recorded goals, constraints, and design rationale. AI agents are good at reducing technical debt &mdash; boilerplate and superficial refactors become frictionless. But because every agent session starts with zero tacit context, agents fill unrecorded rationale with guesses, quietly piling up cognitive and intent debt even as the code looks clean.</p>
 
-    <h2>4. Takeaway 3: Stop Reading Implementation Code &mdash; Adopt &ldquo;Bounded Delegation&rdquo;</h2>
-    <p>To break out of the verification bottleneck, software teams must redefine the boundary between human responsibilities and machine tasks. Matheus Bastos Neves (2026) formalizes this structural solution in the Bounded Delegation hypothesis (H&#8320;):</p>
-    <blockquote><p><strong>The Bounded Delegation Hypothesis (H&#8320;):</strong> Delegating implementation to coding agents is sustainable if, and only if, delegation is bounded on one side by human-owned Intent (problem statement, domain language, architectural decisions) and on the other side by human-readable Evidence (executable scenarios and test results).</p></blockquote>
-    <pre>   HUMAN BOUND                    DELEGATED PATH                   HUMAN BOUND
-┌───────────────────┐        ┌───────────────────┐        ┌───────────────────┐
-│   HUMAN INTENT     │ ─────▶ │   CODING AGENT     │ ─────▶ │  HUMAN EVIDENCE    │
-│ (Problem, Domain,  │        │ (Implementation    │        │  (Executable       │
-│  ADRs)             │        │  Code)              │        │   Tests)           │
-└───────────────────┘        └───────────────────┘        └───────────────────┘</pre>
-    <p>Under Bounded Delegation, software engineering knowledge is structured across <strong>Seven Knowledge Layers</strong>:</p>
-    <ol>
-      <li><strong>Problem</strong> (Intent Bound &mdash; Human Owned): problem statement, target user, constraints, and success criteria.</li>
-      <li><strong>Domain</strong> (Intent Bound &mdash; Human Owned): ubiquitous business language, term by term.</li>
-      <li><strong>Decisions / ADRs</strong> (Intent Bound &mdash; Human Owned): Architectural Decision Records with machine-checkable assertions.</li>
-      <li><strong>Structure</strong> (Delegated Path): a C4 architecture model linked to co-located component contracts.</li>
-      <li><strong>Patterns</strong> (Delegated Path): recurring implementation designs and workflow steps.</li>
-      <li><strong>Steps</strong> (Delegated Path): active increments with delta specifications over the layers above.</li>
-      <li><strong>Evidence</strong> (Evidence Bound &mdash; Human Owned): inspectable executable scenarios, architecture assertions, and automated evaluation suites.</li>
-    </ol>
-    <p>Humans own the bounds (Layers 1&ndash;3 and Layer 7). Agents read, write, and maintain the implementation path between them (Layers 4&ndash;6). Humans stop spending hours reading raw implementation diffs line-by-line; instead, they verify that the evidence satisfies the intent.</p>
+    <h2>The fix: Bounded Delegation</h2>
+    <blockquote><p><strong>The Bounded Delegation Hypothesis (H&#8320;):</strong> Delegating implementation to coding agents is sustainable if, and only if, delegation is bounded on one side by human-owned <strong>Intent</strong> (problem statement, domain language, architectural decisions) and on the other side by human-readable <strong>Evidence</strong> (executable scenarios and test results).</p></blockquote>
+    <p>In other words: stop reading implementation diffs. Humans own the <em>why</em> (problem, domain, architectural decisions) and the <em>proof</em> (executable, domain-readable test scenarios). Agents own everything in between &mdash; structure, patterns, and the implementation steps &mdash; within a path whose two ends are locked by humans. The full paper formalizes this as <strong>seven knowledge layers</strong>, three owned by humans (Problem, Domain, Decisions/ADRs) plus a fourth human-owned layer at the far end (Evidence), with the delegated path (Structure, Patterns, Steps) in between &mdash; and shows how to enforce it physically, e.g. by giving agents read-write access to <code>src/</code> but read-only access to the acceptance test suite.</p>
 
-    <h3>Comparing Test Specs: Raw Agent Output vs. Domain-Inspectable Evidence</h3>
-    <p>Inspired by Adam Tornhill&rsquo;s AI-first workflow, executable evidence must be written in high-level domain language so human experts can verify system behavior at a glance without reading lower-level implementation details.</p>
-    <p><strong>Obscure agent-generated test</strong> (obscures intent, hard for humans to verify):</p>
-    <pre><code>@Test fun reschedule() {
-  val r = http.post("/appointments/42/reschedule", """{"slotId": 7}""")
-  assertEquals(200, r.status)
-  assertEquals("TAKEN", db.query("select status from slot where id=7"))
-  assertEquals(1, db.count("outbox where type='AppointmentRescheduled'"))
-}</code></pre>
-    <p><strong>Inspectable domain-specific scenario</strong> (human-readable evidence):</p>
-    <pre><code>@Test fun `patient reschedules and the old slot becomes free`() {
-  val appointment = appointmentBooked(at = slot("Tue 9am"))
-  val result = patient.reschedules(appointment, to = slot("Thu 2pm"))
+    <h2>Everything downstream of that changes</h2>
+    <p>If human decision bandwidth &mdash; not typing speed &mdash; is the bottleneck, twenty-year-old Agile rituals built to ration scarce programmer hours (sprints, velocity, GitFlow, line-by-line review, hand-off boards) lose their rationale and get replaced by flow-based, decision-gated, boundary-reading practices. And &ldquo;clean code&rdquo; matters <em>more</em>, not less, in this world: deep modules and co-located README contracts keep an agent&rsquo;s context window small enough to reason safely, while convoluted, over-abstracted code degrades machine reasoning just as it degrades human reasoning.</p>
 
-  result.shouldSucceed()
-  slot("Tue 9am").shouldBeFree()
-  slot("Thu 2pm").shouldBeTakenBy(appointment)
-  reminders.shouldAnnounceRescheduling(appointment)
-}</code></pre>
+    <h2>The scarce resource is human attention</h2>
+    <p>The software engineer&rsquo;s role isn&rsquo;t vanishing &mdash; it&rsquo;s moving upstream (domain language, constraints, ADRs) and downstream (executable scenarios, code health gates, real-world evaluation), while implementation in the middle is delegated within strict bounds. The full paper closes with concrete diagnostics &mdash; onboarding velocity, explain-back capacity at approval gates, knowledge dispersion &mdash; that engineering leaders can use to catch cognitive and intent debt before it causes system-level collapse.</p>
 
-    <h3>Enforcing Safety via Physical Suite Locking</h3>
-    <p>A primary failure mode of autonomous agents is &ldquo;cheating&rdquo; &mdash; altering test assertions or deleting failing tests to make low-quality implementation code pass.</p>
-    <p>Under Bounded Delegation, suite locking is not a prompt-level request; it is physically enforced via CI/CD boundary permissions and file-system access control. The agent service account is granted read-write access to implementation paths (<code>src/</code>), but strictly read-only access to the acceptance suite (<code>tests/acceptance/</code>). The agent must write implementation code until the locked suite passes, without any ability to modify the evidence bounds.</p>
-
-    <h2>5. Takeaway 4: Traditional Agile Practices Are Losing Their Rationale</h2>
-    <p>Over the past twenty years, software methodologies like Scrum, GitFlow, and SAFe were engineered around one core constraint: rationing expensive human programmer hours. In Fred Brooks&rsquo;s classical framework (<em>No Silver Bullet</em>), engineering effort is divided between essential complexity (the domain problem and architectural design) and accidental complexity (syntax, compilation, boilerplate, and typing).</p>
-    <p>Coding agents represent the ultimate tool for eliminating accidental complexity. Because machine execution time is now virtually free, software delivery is shifting from capacity-constrained planning to attention-constrained queueing.</p>
-    <pre>TRADITIONAL AGILE: Capacity-Constrained Planning
-┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│  Developer Hours │ ──▶ │ Sprint Capacity  │ ──▶ │  Story Points    │
-└──────────────────┘     └──────────────────┘     └──────────────────┘
-
-AGENT-ERA FLOW: Attention-Constrained Queueing
-┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│ Human Attention  │ ──▶ │  Decision &amp; Gate │ ──▶ │ Flow of Bounded  │
-│    Bandwidth     │     │    WIP Limits    │     │    Increments    │
-└──────────────────┘     └──────────────────┘     └──────────────────┘</pre>
-    <p>When human decision-making bandwidth &mdash; not typing capacity &mdash; is the bottleneck, 20-year-old process rituals lose their core rationale:</p>
-    <table>
-      <thead><tr><th>Traditional Engineering Practice</th><th>Agent-Era Replacement</th><th>Structural Rationale</th></tr></thead>
-      <tbody>
-        <tr><td><strong>Sprints &amp; Velocity Estimation</strong> (forecasts human capacity in 2-week boxes)</td><td>Flow Based on Pending Decision WIP Limits</td><td>Machine execution time is variable and near-zero; throughput is bounded strictly by human decision bandwidth.</td></tr>
-        <tr><td><strong>GitFlow / Long-Lived Feature Branches</strong> (isolates slow human coding cycles)</td><td>Trunk-Based Flow with Ephemeral Workspaces</td><td>Parallel agents create massive integration debt; single-trunk integration behind feature flags avoids merge stalls.</td></tr>
-        <tr><td><strong>Line-by-Line Human Code Review</strong> (human inspection of all implementation diffs)</td><td>Boundary Reading &amp; Automated Pipeline Gates</td><td>Humans review domain scenarios, ADRs, and contracts; deterministic CI thresholds review syntax and health metrics.</td></tr>
-        <tr><td><strong>Multi-Stage Hand-Off Boards</strong> (staged movement across Dev &rarr; QA &rarr; Review)</td><td>Automated Pipeline Gates + Human Decision Queues</td><td>Hand-offs between specialists decay context; agents run pipelines, presenting human gates with clear decision queues.</td></tr>
-        <tr><td><strong>Release Trains &amp; Quarterly Planning</strong> (synchronizes cross-team human dependencies)</td><td>Continuous Deployment with Contract Enforcement</td><td>Cross-team coordination shifts to machine-checked contracts, policy files, and flag-based rollouts.</td></tr>
-      </tbody>
-    </table>
-    <p>Core Agile values &mdash; such as customer collaboration and delivering working software &mdash; remain fully intact. However, operational tools like story points, velocity metrics, and time-boxed sprints lose their purpose when machine implementation takes minutes, shifting the central challenge entirely to managing human review queues.</p>
-
-    <h2>6. Takeaway 5: Code Health Matters More for Machines Than It Ever Did for Humans</h2>
-    <p>A common misconception in the age of generative AI is that &ldquo;clean code&rdquo; no longer matters because humans rarely read implementation details. Empirical research demonstrates the exact opposite.</p>
-    <p>Borg et al. (2026) evaluated LLM refactoring across 5,000 Python files and proved that code engineered for human comprehension (characterized by low cyclomatic complexity, clear module boundaries, and high cohesion) is modified significantly more safely by AI agents. Machine reasoning degrades rapidly when context windows are overloaded with convoluted logic.</p>
-
-    <h3>Architectural Patterns for Context-Window Isolation</h3>
-    <p>David Parnas&rsquo;s classic principles of modular design (1972) and information hiding serve as essential context-isolation barriers for LLM context windows. Modern architects must adopt two explicit patterns:</p>
-    <ol>
-      <li><strong>Deep Modules</strong> (Ousterhout, 2021): systems should be composed of deep modules that provide simple, narrow interfaces while hiding complex implementation details behind the boundary. Deep modules allow an agent to modify internal code without needing to pull thousands of lines of external context into its context window.</li>
-      <li><strong>Co-Located README Contracts</strong> (EGM &ldquo;Peanuts and Hay&rdquo;): following Google&rsquo;s Elephant-Goldfish Model, every leaf code directory contains a co-located <code>README.md</code> defining component interfaces, invariants, and side effects. Parent directory READMEs roll child contracts up into high-level system maps. An agent touching a directory reads its local contract immediately without searching the repository.</li>
-    </ol>
-    <pre>src/
-├── scheduling/
-│   ├── README.md                 &lt;-- Component Contract (Interface, Invariants)
-│   ├── AppointmentService.kt
-│   └── SlotManager.kt
-└── notifications/
-    ├── README.md                 &lt;-- Component Contract
-    └── ReminderNotifier.kt</pre>
-
-    <h3>Shifting Design Trade-Offs</h3>
-    <p>To optimize for both human understanding and agent reasoning, software architects must recalibrate classic code patterns:</p>
-    <ul>
-      <li><strong>Reduce micro-abstractions</strong>: extreme micro-abstractions &mdash; such as forcing an interface for every single class, creating layer-by-layer DTO mappers across dozens of directories, or splitting simple logic across tiny single-method files &mdash; consume context tokens unnecessarily and force agents into excessive multi-file hopping.</li>
-      <li><strong>Strengthen macro-architecture</strong>: enforce strict Clean Architecture dependency boundaries (domain code never depends on infrastructure), vertical domain slicing, and machine-checkable architecture assertions (e.g., using ArchUnit to block boundary violations in CI).</li>
-    </ul>
-
-    <h2>7. Conclusion: The Scarce Resource Is Human Attention</h2>
-    <p>The role of the software engineer is not vanishing; it is shifting decisively upstream and downstream:</p>
-    <ul>
-      <li><strong>Upstream</strong>: defining domain language, framing business constraints, capturing architectural decision records (ADRs), and bounding system intent.</li>
-      <li><strong>Downstream</strong>: designing domain-executable scenarios, establishing automated code health gates, and evaluating real-world system behavior.</li>
-    </ul>
-    <p>Implementation in the middle is increasingly delegated to autonomous agents operating within strictly bounded constraints. Engineering leaders who attempt to scale teams by simply generating more lines of code will find themselves drowning in review delays, security vulnerabilities, and compounding cognitive debt.</p>
-
-    <h3>Measuring Debt Before System Collapse</h3>
-    <p>Before scaling agent workflows, engineering organizations must establish concrete diagnostic proxies to measure cognitive and intent debt across their repositories:</p>
-    <ol>
-      <li><strong>Onboarding velocity</strong>: measure the time required for new engineers to deliver their first unassisted production change.</li>
-      <li><strong>Explain-back capacity</strong>: conduct periodic spot-checks at human decision gates requiring approvers to explain the structural impact of a change without reading the implementation diff.</li>
-      <li><strong>Knowledge dispersion</strong>: analyze commit history to ensure system context is distributed across the team rather than isolated in single individuals or machine-generated blobs.</li>
-    </ol>
-
-    <h3>A Question for Engineering Leaders</h3>
-    <p>As autonomous coding agents take over daily implementation in your repositories, what concrete mechanisms does your engineering organization have in place to measure and manage cognitive debt before the shared theory of your system disappears entirely?</p>
+    <div class="cta">
+      <strong>Read the full paper &rarr;</strong> <a href="https://github.com/mtheus/bounded-delegation/blob/main/paper/main.tex" target="_blank" rel="noopener">paper/main.tex</a> (LaTeX source; arXiv preprint coming soon)<br>
+      <strong>Discuss &rarr;</strong> <a href="https://www.linkedin.com/in/matheusbn/" target="_blank" rel="noopener">linkedin.com/in/matheusbn</a>
+    </div>
 
     <hr>
 
-    <h3>Cite this work</h3>
+    <h2>Cite this work</h2>
     <div class="bib">@misc{neves2026boundeddelegation,
   author = {Neves, Matheus Bastos},
   title  = {Why AI Coding Agents Are Breaking Software Engineering (And What to Do About It)},

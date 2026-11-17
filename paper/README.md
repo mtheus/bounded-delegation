@@ -1,7 +1,8 @@
 # Paper source (arXiv package)
 
-This folder holds the LaTeX source for the preprint. It is built from
-[`../article.md`](../article.md), the canonical Markdown draft.
+This folder holds the LaTeX source for the preprint. `main.tex` is the full, canonical
+article — the one meant for arXiv and, later, JSERD. (`../article.md` is a separate, short
+blog-style summary for the project website — it does not contain the full text.)
 
 ## Files
 
@@ -70,4 +71,4 @@ The [Journal of Software Engineering Research and Development (JSERD)](https://j
 
 1. Check JSERD's current author guidelines/template on the journal site (templates change between calls for papers).
 2. Expand the related-work/validation sections — a journal submission typically expects more rigorous positioning against prior work than a position-paper preprint.
-3. Reuse the content in `../article.md` as the source of truth; don't fork it — keep one canonical draft and regenerate both the arXiv and JSERD versions from it.
+3. Reuse the content in `main.tex` as the source of truth; don't fork it — keep one canonical draft and regenerate the JSERD version from it (update `../article.md`'s short summary only if the headline claims change).
