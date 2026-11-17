@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bounded Delegation</title>
+<meta name="description" content="Why AI coding agents are breaking software engineering, and the Bounded Delegation Hypothesis: a framework for dividing context and decision between humans and coding agents.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why AI Coding Agents Are Breaking Software Engineering (And What to Do About It)">
+<meta property="og:description" content="The Bounded Delegation Hypothesis: delegation to coding agents is sustainable only when bounded by human-owned Intent and human-readable Evidence.">
+<meta property="og:url" content="https://mtheus.github.io/bounded-delegation/">
+<meta name="twitter:card" content="summary">
+<meta name="author" content="Matheus Bastos Neves">
+<style>
+  :root{
+    --bg:#faf8f4;
+    --bg-raised:#ffffff;
+    --text:#1b1b18;
+    --text-dim:#5c5850;
+    --border:#e4ddd1;
+    --accent:#9a3b28;
+    --accent-ink:#ffffff;
+    --card-bg:#ffffff;
+    --code-bg:#f1ede3;
+    --quote-border:#c9a98a;
+    --pill-bg:#f1ede3;
+    --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#17140f;
+      --bg-raised:#211c15;
+      --text:#f1ece1;
+      --text-dim:#b7ac99;
+      --border:#3a3326;
+      --accent:#e08a63;
+      --accent-ink:#1b1309;
+      --card-bg:#211c15;
+      --code-bg:#1d1812;
+      --quote-border:#6b5a42;
+      --pill-bg:#2a2319;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#17140f;
+    --bg-raised:#211c15;
+    --text:#f1ece1;
+    --text-dim:#b7ac99;
+    --border:#3a3326;
+    --accent:#e08a63;
+    --accent-ink:#1b1309;
+    --card-bg:#211c15;
+    --code-bg:#1d1812;
+    --quote-border:#6b5a42;
+    --pill-bg:#2a2319;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-sans);
+    line-height:1.6;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:0 24px 96px;}
+
+  header.hero{
+    padding:72px 0 40px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:40px;
+  }
+  .kicker{
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 18px;
+  }
+  h1.title{
+    font-family:var(--font-serif);
+    font-size:2.4rem;
+    line-height:1.18;
+    margin:0 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .subtitle{
+    font-family:var(--font-serif);
+    font-size:1.25rem;
+    color:var(--text-dim);
+    font-style:italic;
+    margin:0 0 28px;
+  }
+  .byline{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px 14px;
+    font-size:0.95rem;
+    color:var(--text-dim);
+  }
+  .byline a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--accent);}
+  .byline a:hover{color:var(--accent);}
+  .dot{opacity:0.5;}
+
+  .actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:28px;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:9px 16px;
+    border-radius:8px;
+    font-size:0.92rem;
+    font-weight:600;
+    text-decoration:none;
+    border:1px solid var(--border);
+    color:var(--text);
+    background:var(--bg-raised);
+  }
+  .btn.primary{
+    background:var(--accent);
+    color:var(--accent-ink);
+    border-color:var(--accent);
+  }
+  .btn.disabled{
+    opacity:0.55;
+    cursor:default;
+  }
+
+  section{margin:48px 0;}
+  h2.section-head{
+    font-family:var(--font-serif);
+    font-size:1.5rem;
+    margin:0 0 18px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--border);
+  }
+
+  .abstract{
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:24px 26px;
+    font-size:1rem;
+    color:var(--text);
+  }
+  .abstract p{margin:0;}
+  .hypothesis{
+    margin-top:16px;
+    padding:16px 20px;
+    border-left:3px solid var(--quote-border);
+    background:var(--code-bg);
+    border-radius:0 8px 8px 0;
+    font-size:0.95rem;
+  }
+  .hypothesis b{color:var(--accent);}
+
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:14px;
+  }
+  .card{
+    background:var(--card-bg);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px 20px;
+  }
+  .card .n{
+    font-family:var(--font-mono);
+    font-size:0.75rem;
+    color:var(--accent);
+    letter-spacing:0.08em;
+  }
+  .card h3{
+    font-size:1.02rem;
+    margin:6px 0 8px;
+    line-height:1.3;
+  }
+  .card p{
+    margin:0;
+    font-size:0.9rem;
+    color:var(--text-dim);
+  }
+
+  .layers{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .layer{
+    display:grid;
+    grid-template-columns:28px 130px 1fr;
+    gap:12px;
+    align-items:baseline;
+    padding:10px 14px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    background:var(--card-bg);
+    font-size:0.9rem;
+  }
+  .layer .num{font-family:var(--font-mono);color:var(--text-dim);}
+  .layer .tag{
+    font-size:0.72rem;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color:var(--accent);
+  }
+  .layer.human{border-left:3px solid var(--accent);}
+  .layer.agent{border-left:3px solid var(--border);}
+
+  .bib{
+    background:var(--code-bg);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 18px;
+    font-family:var(--font-mono);
+    font-size:0.82rem;
+    overflow-x:auto;
+    white-space:pre;
+  }
+
+  footer{
+    border-top:1px solid var(--border);
+    padding-top:28px;
+    font-size:0.88rem;
+    color:var(--text-dim);
+  }
+  footer a{color:var(--text-dim);}
+
+  @media (max-width:560px){
+    h1.title{font-size:1.9rem;}
+    .subtitle{font-size:1.05rem;}
+    header.hero{padding-top:48px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker">Position paper &middot; Preprint &middot; Software Engineering</p>
+    <h1 class="title">Why AI Coding Agents Are Breaking Software Engineering</h1>
+    <p class="subtitle">(And What to Do About It) &mdash; introducing the Bounded Delegation Hypothesis</p>
+    <div class="byline">
+      <span><strong>Matheus Bastos Neves</strong> &middot; Independent Researcher</span>
+      <span class="dot">&bull;</span>
+      <a href="https://www.linkedin.com/in/matheusbn/" target="_blank" rel="noopener">LinkedIn</a>
+      <span class="dot">&bull;</span>
+      <a href="https://github.com/mtheus/bounded-delegation" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="article.html">Read the full article</a>
+      <a class="btn" href="https://github.com/mtheus/bounded-delegation/tree/main/paper" target="_blank" rel="noopener">LaTeX / arXiv source</a>
+      <!-- TODO(arxiv): once published, replace this span with <a class="btn" href="https://arxiv.org/abs/XXXX.XXXXX"> -->
+      <span class="btn disabled" aria-disabled="true" title="Not yet submitted">arXiv (coming soon)</span>
+      <a class="btn" href="https://www.linkedin.com/in/matheusbn/" target="_blank" rel="noopener">Connect on LinkedIn</a>
+    </div>
+  </header>
+
+  <section>
+    <h2 class="section-head">Abstract</h2>
+    <div class="abstract">
+      <p>
+        AI coding agents have made individual developers dramatically faster at writing code, yet
+        team-level delivery outcomes are deteriorating: review queues are growing, pull requests are
+        getting larger and less reviewed, and bug rates are rising. This paper argues that code
+        generation is no longer the bottleneck in software engineering &mdash; <em>verification is</em>.
+        Drawing on controlled experiments, large-scale telemetry, and a landmark trial with experienced
+        open-source maintainers, it shows that developers consistently overestimate the productivity
+        gains of AI assistance while measurable delivery outcomes decline. A three-layer model of
+        software debt &mdash; Technical, Cognitive, and Intent debt &mdash; explains why superficially
+        clean, agent-generated code can still erode a team's ability to safely evolve a system.
+      </p>
+      <div class="hypothesis">
+        <b>The Bounded Delegation Hypothesis (H&#8320;):</b> delegating implementation to coding agents
+        is sustainable if, and only if, delegation is bounded on one side by human-owned
+        <b>Intent</b> (problem statement, domain language, architectural decisions) and on the other
+        side by human-readable <b>Evidence</b> (executable scenarios and test results).
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-head">Five takeaways</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="n">01</div>
+        <h3>Verification, not generation, is the new bottleneck</h3>
+        <p>PR volume and size are up, review time is up 441%, and 31% of PRs merge with no human review at all.</p>
+      </div>
+      <div class="card">
+        <div class="n">02</div>
+        <h3>Technical debt falls; cognitive &amp; intent debt explode</h3>
+        <p>Agents reduce boilerplate but erode shared mental models and unrecorded rationale faster than ever.</p>
+      </div>
+      <div class="card">
+        <div class="n">03</div>
+        <h3>Stop reading implementation &mdash; adopt Bounded Delegation</h3>
+        <p>Bound delegation with human-owned Intent and human-owned Evidence; let agents own the path between.</p>
+      </div>
+      <div class="card">
+        <div class="n">04</div>
+        <h3>Traditional Agile rituals lose their rationale</h3>
+        <p>Sprints and velocity rationed scarce typing hours. The new constraint is human decision bandwidth.</p>
+      </div>
+      <div class="card">
+        <div class="n">05</div>
+        <h3>Code health matters more for machines than for humans</h3>
+        <p>Deep modules and co-located README contracts keep agent context windows small and reasoning safe.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-head">The seven knowledge layers</h2>
+    <div class="layers">
+      <div class="layer human"><span class="num">1</span><span class="tag">Intent &middot; Human</span><span>Problem &mdash; statement, target user, constraints, success criteria</span></div>
+      <div class="layer human"><span class="num">2</span><span class="tag">Intent &middot; Human</span><span>Domain &mdash; ubiquitous business language, term by term</span></div>
+      <div class="layer human"><span class="num">3</span><span class="tag">Intent &middot; Human</span><span>Decisions / ADRs &mdash; machine-checkable architectural assertions</span></div>
+      <div class="layer agent"><span class="num">4</span><span class="tag">Delegated</span><span>Structure &mdash; C4 architecture model + co-located component contracts</span></div>
+      <div class="layer agent"><span class="num">5</span><span class="tag">Delegated</span><span>Patterns &mdash; recurring implementation designs and workflow steps</span></div>
+      <div class="layer agent"><span class="num">6</span><span class="tag">Delegated</span><span>Steps &mdash; active increments with delta specs over the layers above</span></div>
+      <div class="layer human"><span class="num">7</span><span class="tag">Evidence &middot; Human</span><span>Inspectable executable scenarios + automated evaluation suites</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-head">Cite this work</h2>
+    <div class="bib">@misc{neves2026boundeddelegation,
+  author = {Neves, Matheus Bastos},
+  title  = {Why AI Coding Agents Are Breaking Software Engineering (And What to Do About It)},
+  year   = {2026},
+  note   = {Preprint},
+  url    = {https://github.com/mtheus/bounded-delegation}
+}</div>
+  </section>
+
+  <footer>
+    <p>
+      Released under <a href="https://github.com/mtheus/bounded-delegation/blob/main/LICENSE" target="_blank" rel="noopener">CC0 1.0</a> (public domain).
+      Source, LaTeX, and full article on
+      <a href="https://github.com/mtheus/bounded-delegation" target="_blank" rel="noopener">GitHub</a>.
+      A future revision is planned for submission to the
+      <a href="https://journals-sol.sbc.org.br/index.php/jserd/" target="_blank" rel="noopener">Journal of Software Engineering Research and Development (JSERD)</a>.
+    </p>
+    <p>Matheus Bastos Neves &middot; <a href="https://www.linkedin.com/in/matheusbn/" target="_blank" rel="noopener">linkedin.com/in/matheusbn</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
