@@ -1,48 +1,45 @@
 # Bounded Delegation
 
-**Dividing Context and Decision Between Humans and Coding Agents**
-*A comparative review of agent-oriented development techniques and a research agenda for 2027*
+**Why AI Coding Agents Are Breaking Software Engineering (And What to Do About It)**
 
 Matheus Bastos Neves · Independent Researcher · [linkedin.com/in/matheusbn](https://www.linkedin.com/in/matheusbn/)
 
-A multivocal review of eleven agent-oriented development techniques (specification kits,
-multi-agent methods, knowledge-base formats, code-as-specification workflows), comparing how
-each structures and verifies the knowledge a coding agent needs. It finds that no technique
-keeps an explicit architecture model current, that cognitive debt is a market-wide blind spot,
-and that verification splits between checking prose and checking behaviour. From there it
-proposes the **Bounded Delegation hypothesis**: delegating implementation to coding agents is
-sustainable when, and only when, the delegation is bounded on both sides by artifacts humans
-own — intent before the work, human-readable executable evidence after it — with both bounds
-kept current by feedback. The paper states this as six falsifiable sub-hypotheses, an
-evaluation agenda, and a contrast with the software engineering canon (Brooks, Sommerville,
-Parnas, Naur, the Agile Manifesto).
+AI coding agents write code fast, but team-level delivery is getting less stable: review
+queues are growing, pull requests are bigger and less reviewed, bug rates are rising.
+Verification, not generation, is the bottleneck now. This repo holds two things:
 
-- 🌐 **Landing page:** <https://mtheus.github.io/bounded-delegation/>
-- 📖 **Full paper (read online):** <https://mtheus.github.io/bounded-delegation/article.html>
-- 📄 **LaTeX source / PDF:** [`paper/main.tex`](./paper/main.tex) · [`paper/main.pdf`](./paper/main.pdf)
-- 📝 **Short summary:** [`article.md`](./article.md)
+- A **blog post** making that case in plain language, and introducing the **Bounded Delegation
+  Hypothesis**: delegating implementation to coding agents is sustainable only when the
+  delegation is bounded on both sides by artifacts humans own — intent before the work, and
+  human-readable executable evidence after it.
+- The **full academic paper** behind it: a multivocal review of eleven agent-oriented
+  development techniques, a formal model with six falsifiable sub-hypotheses, an evaluation
+  agenda, and a contrast with the software engineering canon (Brooks, Sommerville, Parnas,
+  Naur, the Agile Manifesto).
+
+- 🌐 **Read the blog post:** <https://mtheus.github.io/bounded-delegation/>
+- 📖 **Read the full paper:** <https://mtheus.github.io/bounded-delegation/article.html> · [PDF](./paper/main.pdf)
 - 💼 **Author:** [linkedin.com/in/matheusbn](https://www.linkedin.com/in/matheusbn/)
 
 ## Repository layout
 
 ```
 .
-├── article.md          short blog-style summary, for the website/socials
-├── article.html         the FULL paper, converted to HTML for free online reading
-├── index.html            landing page (abstract, findings, links) for GitHub Pages
-├── .nojekyll             disables Jekyll processing — this is a hand-written static site
+├── index.html            the blog post, for GitHub Pages (homepage)
+├── article.md             the same blog post, in Markdown (for GitHub browsing/social sharing)
+├── article.html            the FULL academic paper, converted to HTML for free online reading
+├── .nojekyll               disables Jekyll processing — this is a hand-written static site
 ├── paper/
-│   ├── main.tex           the FULL article in LaTeX — the canonical source
-│   ├── main.pdf           compiled PDF (pdflatex, builds cleanly, 36 pages)
-│   └── README.md          build instructions
-└── LICENSE                CC0 1.0 (public domain)
+│   ├── main.tex             the full academic paper — the canonical source
+│   ├── main.pdf             compiled PDF (builds cleanly, 36 pages)
+│   └── README.md            build instructions
+└── LICENSE                  CC0 1.0 (public domain)
 ```
 
-**`paper/main.tex` is the canonical, complete article.** `article.html` is a full HTML
-conversion of it (via pandoc, hand-finished) meant to be read freely in a browser, with no
-paywall or submission gate; `article.md` stays a short summary for social sharing. If you
-revise the argument, edit `paper/main.tex` first, then regenerate `article.html` and
-`paper/main.pdf`, and update `article.md`'s summary only if the headline claims changed.
+`index.html` and `article.md` are the same blog post in two formats; edit one, then mirror the
+change in the other. `article.html` is a separate, full HTML conversion of `paper/main.tex` —
+the actual academic paper, not the blog post. If you revise the paper's argument, edit
+`paper/main.tex` first, then regenerate `article.html` and `paper/main.pdf`.
 
 ## License
 
