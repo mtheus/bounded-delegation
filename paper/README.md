@@ -57,18 +57,14 @@ tar -czvf bounded-delegation-arxiv.tar.gz main.tex main.bbl references.bib
 
 Upload `bounded-delegation-arxiv.tar.gz` at <https://arxiv.org/submit>.
 
-### Submission checklist
+Note: arXiv's own license options (CC BY 4.0, CC BY-SA 4.0, CC BY-NC-SA 4.0, or arXiv's
+default non-exclusive license) don't include CC0, which is what the rest of this repo uses —
+pick the closest arXiv license at submission time.
 
-- [ ] Replace every `VERIFY` note in `references.bib` with a real citation.
-- [ ] Confirm the author line/affiliation in `main.tex` is how you want it to appear publicly on arXiv (currently "Independent Researcher").
-- [ ] Decide on a license for the arXiv listing (arXiv offers CC BY 4.0, CC BY-SA 4.0, CC BY-NC-SA 4.0, or arXiv's default non-exclusive license — note this repo's code/text is CC0, which is *not* one of arXiv's own license options, so pick the closest arXiv license at submission time).
-- [ ] Pick the primary category (`cs.SE` suggested) and any cross-lists (`cs.AI`, `cs.HC`).
-- [ ] After acceptance, copy the arXiv ID back into `../index.html` and `../README.md` (there are `TODO(arxiv)` markers in both).
+## SBC JSERD
 
-## Later: SBC JSERD submission
-
-The [Journal of Software Engineering Research and Development (JSERD)](https://journals-sol.sbc.org.br/index.php/jserd/) has its own submission template and review process (SBC/Brazilian Computer Society). When you're ready to submit there:
-
-1. Check JSERD's current author guidelines/template on the journal site (templates change between calls for papers).
-2. Expand the related-work/validation sections — a journal submission typically expects more rigorous positioning against prior work than a position-paper preprint.
-3. Reuse the content in `main.tex` as the source of truth; don't fork it — keep one canonical draft and regenerate the JSERD version from it (update `../article.md`'s short summary only if the headline claims change).
+The [Journal of Software Engineering Research and Development (JSERD)](https://journals-sol.sbc.org.br/index.php/jserd/)
+(SBC/Brazilian Computer Society) has its own submission template and review process, which
+changes between calls for papers — check the journal site for the current author guidelines
+when you're ready to submit there. Reuse `main.tex` as the source of truth rather than forking
+it; regenerate the JSERD version from it.

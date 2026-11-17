@@ -29,7 +29,7 @@ scenarios and test results).
 ├── paper/
 │   ├── main.tex           the FULL original article — the one submitted to arXiv/JSERD
 │   ├── references.bib     bibliography (see paper/README.md — some entries need verification)
-│   └── README.md          build instructions + arXiv/JSERD submission checklist
+│   └── README.md          build and arXiv/JSERD submission instructions
 └── LICENSE                CC0 1.0 (public domain)
 ```
 
@@ -38,15 +38,6 @@ arXiv and, later, adapted for JSERD. `article.md`/`article.html` are a *short, s
 blog-post summary used to drive traffic to the full paper; they are not meant to contain the
 full text. If you revise the argument, edit `paper/main.tex` first, then update the summary in
 `article.md`/`article.html` only if the headline claims changed.
-
-## Publishing checklist
-
-- [x] Full paper written (`paper/main.tex`)
-- [x] Blog summary + landing page for GitHub Pages (`article.md`/`article.html`, `index.html`)
-- [ ] **Enable GitHub Pages**: repo Settings → Pages → Source: "Deploy from a branch" → `main` / `/ (root)`. Once enabled, the site is served at <https://mtheus.github.io/bounded-delegation/>.
-- [ ] **Fix references**: several bibliography entries in `paper/references.bib` are marked `VERIFY` — confirm exact titles/venues/URLs before submitting anywhere. See [`paper/README.md`](./paper/README.md).
-- [ ] **Submit to arXiv**: build `main.pdf`/`main.bbl` and upload per [`paper/README.md`](./paper/README.md). After acceptance, update the two `TODO(arxiv)` markers (here and in `index.html`) with the real arXiv link.
-- [ ] **Submit to JSERD** (later): adapt `paper/main.tex` to JSERD's author template once you're ready; see notes in [`paper/README.md`](./paper/README.md).
 
 ## License
 
