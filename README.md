@@ -20,7 +20,6 @@ Parnas, Naur, the Agile Manifesto).
 - 🌐 **Landing page:** <https://mtheus.github.io/bounded-delegation/>
 - 📖 **Full paper (read online):** <https://mtheus.github.io/bounded-delegation/article.html>
 - 📄 **LaTeX source / PDF:** [`paper/main.tex`](./paper/main.tex) · [`paper/main.pdf`](./paper/main.pdf)
-- 🗄️ **HAL:** <!-- TODO(hal): add the HAL deposit URL here --> *(link coming soon)*
 - 📝 **Short summary:** [`article.md`](./article.md)
 - 💼 **Author:** [linkedin.com/in/matheusbn](https://www.linkedin.com/in/matheusbn/)
 

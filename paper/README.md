@@ -4,8 +4,6 @@ This folder holds the LaTeX source for the paper. `main.tex` is the full, canoni
 (`../article.html` is a full HTML conversion of it for free online reading; `../article.md` is
 a separate, short blog-style summary for the project website.)
 
-<!-- TODO(hal): add the HAL deposit URL/ID here once available -->
-
 ## Files
 
 - `main.tex` — article-class LaTeX source (`cs.SE`-flavoured; no particular venue template).
