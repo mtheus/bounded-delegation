@@ -7,59 +7,53 @@ blog-style summary for the project website — it does not contain the full text
 ## Files
 
 - `main.tex` — article-class source, ready for arXiv (`cs.SE` primary category suggested; consider cross-listing `cs.AI`/`cs.HC`).
-- `references.bib` — BibTeX bibliography. **Several entries are marked `VERIFY`** — see below.
+- `main.pdf` — compiled output, checked into the repo so the paper is readable before arXiv is live.
 
-## Before you submit: fix the references
+References are set directly in `main.tex` as running author-year text plus a thematically
+grouped, hyperlinked "References" section at the end — matching how the source article itself
+cites things — rather than through a separate `.bib`/BibTeX pipeline. There is no `references.bib`
+in this folder.
 
-The draft cites a number of very recent (2025–2026) industry reports and
-public statements (Faros AI telemetry, Veracode's GenAI report, DORA's
-report, Storey's "Triple Debt Model," Shaw & Nave, Borg et al., Tornhill,
-Google's "Elephant-Goldfish Model" post, and remarks attributed to Karpathy,
-Farley, and Cherny). I could not verify the exact venue/title/URL for these
-against a primary source, so `references.bib` marks them `VERIFY` with
-placeholder bibliographic data. **Replace those placeholders with the real
-citation (title, outlet, date, URL/DOI) before submitting** — arXiv won't
-reject incorrect references, but you are responsible for their accuracy,
-and a reviewer at JSERD will check them closely.
+## Figures not reproduced
 
-Entries for Peng et al. (2023), Naur (1985), Brooks (1986), Parnas (1972),
-Ousterhout (2021), and METR (2025) are real, well-known publications and
-have been filled in with standard bibliographic data already.
+The source article had two embedded charts that did not survive the hand-off to this LaTeX
+version:
+
+- **Figure 1** (Section 5): a qualitative scatterplot positioning the eleven reviewed
+  techniques and the proposed model on two axes (scope of knowledge organised; strength of
+  verification).
+- **Figure 2** (Section 7.4): an 8-step diagram of one increment under Bounded Delegation (4
+  human steps, 4 agent steps).
+
+Both are left as labelled placeholder quotes in `main.tex` (search for `[Figure`). If you have
+the original charts, drop them in as `fig1.pdf`/`fig2.pdf` and replace the placeholders with
+`\includegraphics`.
 
 ## Building locally
 
-You need a TeX distribution (TeX Live / MacTeX / MiKTeX) with `latexmk`,
-or at least `pdflatex` + `bibtex`.
+Verified with TeX Live 2023 (`pdflatex`). From this folder:
 
 ```bash
-cd paper
-latexmk -pdf main.tex
-# or, manually:
-pdflatex main.tex
-bibtex main
-pdflatex main.tex
-pdflatex main.tex
+pdflatex -interaction=nonstopmode main.tex
+pdflatex -interaction=nonstopmode main.tex   # second pass for cross-references
 ```
 
-This produces `main.pdf`.
+This was run during the authoring of this file: it compiles cleanly (no errors, no undefined
+references) to a 35-page PDF, with only a handful of cosmetically negligible overfull/underfull
+boxes from the narrow table columns.
 
 ## Packaging for arXiv
 
 arXiv wants the LaTeX **source**, not just a PDF. From this folder:
 
 ```bash
-# Generate main.bbl (arXiv does not reliably run bibtex for you)
-pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
-
-# Package exactly what arXiv needs
-tar -czvf bounded-delegation-arxiv.tar.gz main.tex main.bbl references.bib
+tar -czvf bounded-delegation-arxiv.tar.gz main.tex
 ```
 
-Upload `bounded-delegation-arxiv.tar.gz` at <https://arxiv.org/submit>.
-
-Note: arXiv's own license options (CC BY 4.0, CC BY-SA 4.0, CC BY-NC-SA 4.0, or arXiv's
-default non-exclusive license) don't include CC0, which is what the rest of this repo uses —
-pick the closest arXiv license at submission time.
+Upload `bounded-delegation-arxiv.tar.gz` at <https://arxiv.org/submit>. Note: arXiv's own
+license options (CC BY 4.0, CC BY-SA 4.0, CC BY-NC-SA 4.0, or arXiv's default non-exclusive
+license) don't include CC0, which is what the rest of this repo uses — pick the closest arXiv
+license at submission time.
 
 ## SBC JSERD
 

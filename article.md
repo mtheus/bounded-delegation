@@ -1,37 +1,40 @@
-# Why AI Coding Agents Are Breaking Software Engineering (And What to Do About It)
+# Bounded Delegation: Dividing Context and Decision Between Humans and Coding Agents
+
+*A comparative review of agent-oriented development techniques and a research agenda for 2027*
 
 **Matheus Bastos Neves** · Independent Researcher
 [linkedin.com/in/matheusbn](https://www.linkedin.com/in/matheusbn/) · November 2026
 
-*This is a short summary of the full paper. Read the complete argument, data, and the formal Bounded Delegation framework in the [LaTeX source](./paper/main.tex) (soon on arXiv).*
+*This is a short summary. Read the complete review, the full comparison tables, and the formal model in the [full paper](./paper/main.pdf) ([LaTeX source](./paper/main.tex)) — arXiv preprint coming soon.*
 
 ---
 
-AI coding agents are writing code with incredible fluency, boosting individual developer speed by over 50% on targeted tasks. Yet across engineering organizations, delivery is getting *less* stable: review queues are growing, pull requests are getting bigger and less reviewed, and bug rates are rising. The industry bet that generative AI would resolve software engineering bottlenecks by automating implementation. It didn't — it just moved the bottleneck.
+Coding agents now write most of the implementation in many teams, and a market of techniques has rushed in to tell them what a system is and what it should do: specification kits (GitHub Spec Kit, Kiro, OpenSpec, Tessl), multi-agent review methods (BMAD, AWS AI-DLC, Google's Elephant-Goldfish Model), knowledge-base formats (LLM Wiki, Open Knowledge Format, C4/arc42/ADRs), and code-as-specification workflows (Adam Tornhill's AI-first approach). We reviewed eleven of them against nine criteria — unit of knowledge, directory structure, verification, drift control, and more — and found three gaps no single technique closes.
 
-## Verification, not generation, is the new constraint
+## What the market gets wrong
 
-Controlled experiments show individual developers completing tasks over 50% faster with AI assistance. But organizational telemetry tells a different story: PR volume and size are up, median review time has risen by hundreds of percent, and a meaningful share of pull requests now merge with no human review at all. In a landmark trial, experienced maintainers working in their own mature repositories actually took *longer* with AI assistance — while still believing, afterward, that they had been faster. No human can read thousands of AI-generated lines carefully enough to maintain true ownership. Trust has to come from executable specifications and automated verification, not manual line-by-line review.
+**Intent is captured once and then forgotten.** Almost every technique records the *why* behind a change at delivery time, but only a few have any mechanism to keep that record current as the system evolves.
 
-## Three kinds of debt — and AI only pays down one of them
+**Cognitive debt is a blind spot.** None of the eleven techniques measures whether the *team* still understands the system — only whether a document or a test exists.
 
-Software debt isn't one thing. **Technical debt** is defects in the code itself. **Cognitive debt** is the erosion of the shared mental models developers hold about a system. **Intent debt** is the absence of recorded goals, constraints, and design rationale. AI agents are good at reducing technical debt — boilerplate and superficial refactors become frictionless. But because every agent session starts with zero tacit context, agents fill unrecorded rationale with guesses, quietly piling up cognitive and intent debt even as the code looks clean.
+**Verification is split into two disconnected worlds.** Prose-based techniques check that a specification is clear and complete. Tornhill's executable-test approach checks that behaviour is correct. No technique checks both, and none keeps an explicit architecture model across the whole system while doing it.
 
-## The fix: Bounded Delegation
+## The proposal: Bounded Delegation
 
-> **The Bounded Delegation Hypothesis (H₀):** Delegating implementation to coding agents is sustainable if, and only if, delegation is bounded on one side by human-owned **Intent** (problem statement, domain language, architectural decisions) and on the other side by human-readable **Evidence** (executable scenarios and test results).
+> **The Bounded Delegation hypothesis.** Delegating implementation to coding agents is sustainable when, and only when, the delegation is bounded on both sides by artifacts that humans own: *intent* before the work (problem, domain language, decisions) and *evidence* after it (inspectable, executable scenarios and their results). What lies between the bounds can be written, read, and maintained by agents — provided the bounds are verified independently of their authors and kept current by feedback.
 
-In other words: stop reading implementation diffs. Humans own the *why* (problem, domain, architectural decisions) and the *proof* (executable, domain-readable test scenarios). Agents own everything in between — structure, patterns, and the implementation steps — within a path whose two ends are locked by humans. The full paper formalizes this as **seven knowledge layers**, three owned by humans (Problem, Domain, Decisions/ADRs) plus a fourth human-owned layer at the far end (Evidence), with the delegated path (Structure, Patterns, Steps) in between — and shows how to enforce it physically, e.g. by giving agents read-write access to `src/` but read-only access to the acceptance test suite.
+We operationalize this as **seven knowledge layers** (Problem, Domain, and Decisions as human-owned intent; Structure, Patterns, and Steps as the delegated path; Evidence as human-owned, agent-unwritable proof), **three roles** borrowed and extended from Google's Elephant-Goldfish Model (context-rich "elephants" draft, zero-context "goldfish" review, humans decide and must explain changes back in their own words), and an **eight-step increment cycle** with a feedback ring that routes drift signals back up through the layers. In one sentence: humans read intent and evidence; agents read and write the path between them.
 
-## Everything downstream of that changes
+## What has to change, and what doesn't
 
-If human decision bandwidth — not typing speed — is the bottleneck, twenty-year-old Agile rituals built to ration scarce programmer hours (sprints, velocity, GitFlow, line-by-line review, hand-off boards) lose their rationale and get replaced by flow-based, decision-gated, boundary-reading practices. And "clean code" matters *more*, not less, in this world: deep modules and co-located README contracts keep an agent's context window small enough to reason safely, while convoluted, over-abstracted code degrades machine reasoning just as it degrades human reasoning.
+Measured against the software engineering canon — Brooks, Sommerville, Parnas, Naur, the Agile Manifesto — the fundamentals hold. What changes is the allocation of work: implementation becomes cheap and delegated, while specification and validation become the whole of the human job. Practices built to ration scarce programmer-hours (GitFlow, two-week sprints, velocity estimation, line-by-line review, release trains) lose their rationale once the scarce resource is human *attention* instead — while the principles beneath them (small batches, fast feedback, limited work in progress) matter more than ever.
 
-## The scarce resource is human attention
+## This is a hypothesis, not a result
 
-The software engineer's role isn't vanishing — it's moving upstream (domain language, constraints, ADRs) and downstream (executable scenarios, code health gates, real-world evaluation), while implementation in the middle is delegated within strict bounds. The full paper closes with concrete diagnostics — onboarding velocity, explain-back capacity at approval gates, knowledge dispersion — that engineering leaders can use to catch cognitive and intent debt before it causes system-level collapse.
+None of this has been validated empirically. The full paper states six falsifiable sub-hypotheses (H1–H6), an evaluation agenda with concrete experimental designs for each, and a full threats-to-validity discussion — because a single-author, narrative review building a model to fit its own findings is exactly the kind of result that needs independent testing before anyone should trust it.
 
-**Read the full paper** → [`paper/main.tex`](./paper/main.tex) (LaTeX source; arXiv preprint coming soon) · **Discuss** → [linkedin.com/in/matheusbn](https://www.linkedin.com/in/matheusbn/)
+**Read the full paper** → [PDF](./paper/main.pdf) · [LaTeX source](./paper/main.tex) (arXiv preprint coming soon)
+**Discuss** → [linkedin.com/in/matheusbn](https://www.linkedin.com/in/matheusbn/)
 
 ---
 
@@ -44,7 +47,7 @@ Released under [CC0 1.0](./LICENSE) — public domain.
 ```bibtex
 @misc{neves2026boundeddelegation,
   author = {Neves, Matheus Bastos},
-  title  = {Why AI Coding Agents Are Breaking Software Engineering (And What to Do About It)},
+  title  = {Bounded Delegation: Dividing Context and Decision Between Humans and Coding Agents},
   year   = {2026},
   note   = {Preprint},
   url    = {https://github.com/mtheus/bounded-delegation}

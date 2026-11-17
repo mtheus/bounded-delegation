@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bounded Delegation</title>
-<meta name="description" content="Why AI coding agents are breaking software engineering, and the Bounded Delegation Hypothesis: a framework for dividing context and decision between humans and coding agents.">
+<meta name="description" content="A comparative review of eleven agent-oriented development techniques and the Bounded Delegation Hypothesis for dividing context and decision between humans and coding agents.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Why AI Coding Agents Are Breaking Software Engineering (And What to Do About It)">
-<meta property="og:description" content="The Bounded Delegation Hypothesis: delegation to coding agents is sustainable only when bounded by human-owned Intent and human-readable Evidence.">
+<meta property="og:title" content="Bounded Delegation: Dividing Context and Decision Between Humans and Coding Agents">
+<meta property="og:description" content="A comparative review of 11 agent-oriented development techniques, and the Bounded Delegation Hypothesis: delegation to coding agents is sustainable only when bounded by human-owned Intent and human-readable Evidence.">
 <meta property="og:url" content="https://mtheus.github.io/bounded-delegation/">
 <meta name="twitter:card" content="summary">
 <meta name="author" content="Matheus Bastos Neves">
@@ -248,9 +248,9 @@
 <div class="wrap">
 
   <header class="hero">
-    <p class="kicker">Position paper &middot; Preprint &middot; Software Engineering</p>
-    <h1 class="title">Why AI Coding Agents Are Breaking Software Engineering</h1>
-    <p class="subtitle">(And What to Do About It) &mdash; introducing the Bounded Delegation Hypothesis</p>
+    <p class="kicker">Comparative review &middot; Preprint &middot; Software Engineering</p>
+    <h1 class="title">Bounded Delegation</h1>
+    <p class="subtitle">Dividing Context and Decision Between Humans and Coding Agents &mdash; a comparative review and a research agenda for 2027</p>
     <div class="byline">
       <span><strong>Matheus Bastos Neves</strong> &middot; Independent Researcher</span>
       <span class="dot">&bull;</span>
@@ -260,7 +260,8 @@
     </div>
     <div class="actions">
       <a class="btn primary" href="article.html">Read the summary</a>
-      <a class="btn" href="https://github.com/mtheus/bounded-delegation/blob/main/paper/main.tex" target="_blank" rel="noopener">Read the full paper (LaTeX)</a>
+      <a class="btn" href="paper/main.pdf" target="_blank" rel="noopener">Full paper (PDF)</a>
+      <a class="btn" href="https://github.com/mtheus/bounded-delegation/blob/main/paper/main.tex" target="_blank" rel="noopener">LaTeX source</a>
       <!-- TODO(arxiv): once published, replace this span with <a class="btn" href="https://arxiv.org/abs/XXXX.XXXXX"> -->
       <span class="btn disabled" aria-disabled="true" title="Not yet submitted">arXiv (coming soon)</span>
       <a class="btn" href="https://www.linkedin.com/in/matheusbn/" target="_blank" rel="noopener">Connect on LinkedIn</a>
@@ -271,52 +272,53 @@
     <h2 class="section-head">Abstract</h2>
     <div class="abstract">
       <p>
-        AI coding agents have made individual developers dramatically faster at writing code, yet
-        team-level delivery outcomes are deteriorating: review queues are growing, pull requests are
-        getting larger and less reviewed, and bug rates are rising. This paper argues that code
-        generation is no longer the bottleneck in software engineering &mdash; <em>verification is</em>.
-        Drawing on controlled experiments, large-scale telemetry, and a landmark trial with experienced
-        open-source maintainers, it shows that developers consistently overestimate the productivity
-        gains of AI assistance while measurable delivery outcomes decline. A three-layer model of
-        software debt &mdash; Technical, Cognitive, and Intent debt &mdash; explains why superficially
-        clean, agent-generated code can still erode a team's ability to safely evolve a system.
+        Coding agents now write most of the implementation in many teams, and a market of techniques
+        has emerged to tell them what a system is and what it should do: specification kits, multi-agent
+        methods, review plugins, skill collections, knowledge-base formats, and code-as-specification
+        workflows. We conduct a multivocal review of <strong>eleven approaches</strong> (snapshot:
+        November 2026), comparing them on nine criteria including directory structure, verification,
+        drift control, and the three debts of Storey's model. No reviewed technique maintains an
+        explicit architecture model across features; cognitive debt is a blind spot of the market; and
+        verification splits into two disconnected worlds, one checking that prose is clear and one
+        checking that behaviour is correct.
       </p>
       <div class="hypothesis">
-        <b>The Bounded Delegation Hypothesis (H&#8320;):</b> delegating implementation to coding agents
-        is sustainable if, and only if, delegation is bounded on one side by human-owned
-        <b>Intent</b> (problem statement, domain language, architectural decisions) and on the other
-        side by human-readable <b>Evidence</b> (executable scenarios and test results).
+        <b>The Bounded Delegation Hypothesis:</b> delegating implementation to coding agents
+        is sustainable when, and only when, the delegation is bounded on both sides by artifacts
+        humans own &mdash; <b>Intent</b> before the work (problem, domain language, decisions) and
+        <b>Evidence</b> after it (inspectable executable scenarios and their results), with both
+        bounds kept current by feedback.
       </div>
     </div>
   </section>
 
   <section>
-    <h2 class="section-head">Five takeaways</h2>
+    <h2 class="section-head">Key findings</h2>
     <div class="cards">
       <div class="card">
         <div class="n">01</div>
-        <h3>Verification, not generation, is the new bottleneck</h3>
-        <p>PR volume and size are up, review time is up 441%, and 31% of PRs merge with no human review at all.</p>
+        <h3>Intent is captured once, then forgotten</h3>
+        <p>Almost every reviewed technique records the <em>why</em> at delivery; almost none keeps it current as the system evolves.</p>
       </div>
       <div class="card">
         <div class="n">02</div>
-        <h3>Technical debt falls; cognitive &amp; intent debt explode</h3>
-        <p>Agents reduce boilerplate but erode shared mental models and unrecorded rationale faster than ever.</p>
+        <h3>Cognitive debt is a market-wide blind spot</h3>
+        <p>No technique measures whether the team still understands the system &mdash; only whether an artifact exists.</p>
       </div>
       <div class="card">
         <div class="n">03</div>
-        <h3>Stop reading implementation &mdash; adopt Bounded Delegation</h3>
-        <p>Bound delegation with human-owned Intent and human-owned Evidence; let agents own the path between.</p>
+        <h3>Verification splits into two worlds</h3>
+        <p>Prose-based techniques check that specs are clear. Executable-test workflows check that behaviour is correct. None do both.</p>
       </div>
       <div class="card">
         <div class="n">04</div>
-        <h3>Traditional Agile rituals lose their rationale</h3>
-        <p>Sprints and velocity rationed scarce typing hours. The new constraint is human decision bandwidth.</p>
+        <h3>Agile rituals built for scarce hours lose their rationale</h3>
+        <p>GitFlow, sprints, velocity, and line-by-line review existed to ration programmer hours. The scarce resource is now human attention.</p>
       </div>
       <div class="card">
         <div class="n">05</div>
-        <h3>Code health matters more for machines than for humans</h3>
-        <p>Deep modules and co-located README contracts keep agent context windows small and reasoning safe.</p>
+        <h3>A hypothesis, not a result</h3>
+        <p>Six falsifiable sub-hypotheses (H1&ndash;H6), an evaluation agenda, and a full threats-to-validity section &mdash; nothing here is validated yet.</p>
       </div>
     </div>
   </section>
@@ -338,7 +340,7 @@
     <h2 class="section-head">Cite this work</h2>
     <div class="bib">@misc{neves2026boundeddelegation,
   author = {Neves, Matheus Bastos},
-  title  = {Why AI Coding Agents Are Breaking Software Engineering (And What to Do About It)},
+  title  = {Bounded Delegation: Dividing Context and Decision Between Humans and Coding Agents},
   year   = {2026},
   note   = {Preprint},
   url    = {https://github.com/mtheus/bounded-delegation}
